@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script
+      src="fbscript.js"></script>
+
+    <div class="container">
+
+      <div style="clear:both">&nbsp;</div>
+
+      <div>
+        <h1>Source Link</h1>
+        <form class="form-inline">
+          <div class="form-group">
+            <input type="text" class="form-control" id="inpUrl" placeholder="Input URL here">
+          </div>
+          <button type="submit" class="btn btn-primary">FETCH DATA</button>
+          <button id="login" onclick="javascript:fbSearch(); return false;" class="btn btn-primary">
+            Fetch data in FB
+          </button>
+        </form>
+      </div>
+
+    </div><!-- /.container -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Source Link</h1>
+
+          <form>
+            <div class="form-group row">
+              <label for="inpTitle" class="col-sm-2 col-form-label">Title</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inpTitle" placeholder="title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inpCaption" class="col-sm-2 col-form-label">Caption</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" id="inpCaption" placeholder="caption"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inpCategory" class="col-sm-2 col-form-label">Category</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="inpCategory">
+                  <option selected>Food</option>
+                  <option value="1">Cat1</option>
+                  <option value="2">Cat2</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inpLang" class="col-sm-2 col-form-label">Language</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="inpLang">
+                  <option selected>Swedish</option>
+                  <option value="1">English</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inpTime" class="col-sm-2 col-form-label">Time</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="inpTime">
+                  <option selected>Tomorrow</option>
+                  <option value="1">Now</option>
+                </select>
+              </div>
+            </div>
+          </form>
+
+          <br/>
+
+          <h3>Other data:</h3>
+          <div id="other-data"></div>
+
+        </div>
+        <div class="col-md-4">
+          <img id="imgPreview" src="http://via.placeholder.com/350x150" />
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="/bower/json2html-list/index.js"></script>
+
+  </body>
+</html>
