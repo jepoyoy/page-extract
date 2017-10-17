@@ -1,0 +1,22 @@
+{
+  "name": "page-extract",
+  "version": "1.0.0",
+  "description": "upwork page extractor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jepoyoy/page-extract.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jepoyoy/page-extract/issues"
+  },
+  "homepage": "https://github.com/jepoyoy/page-extract#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
