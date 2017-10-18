@@ -1,0 +1,20 @@
+{
+  "name": "page-extract",
+  "description": "upwork page extractor",
+  "main": "app.js",
+  "authors": [
+    "jepoyoy <jepoyoy@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/jepoyoy/page-extract",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "json2html-list": "^1.0.2"
+  }
+}
