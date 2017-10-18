@@ -19,7 +19,7 @@ module.exports = function(app, express){
 		    		function(data){
 		    			console.log(data);
 		    			index = 5;
-						fields="picture,link,name,likes.limit(0).summary(true),reactions.limit(0).summary(true)"
+						fields="full_picture,link,name,likes.limit(0).summary(true),reactions.limit(0).summary(true)"
 						prefixObjId = data.id + "_"
 						runFBGraph(prefixObjId, str[index], fields, req, res);
 		    		})
@@ -76,7 +76,9 @@ module.exports = function(app, express){
 		https.get('https://graph.facebook.com/' + prefixObjId + objId+'?fields='+fields+'&access_token=' + req.query.token, (resp) => {
 		
 			let data = '';
-			 
+
+			let token = req.query.token;
+
 			// A chunk of data has been recieved.
 			resp.on('data', (chunk) => {
 			  data += chunk;
@@ -86,14 +88,22 @@ module.exports = function(app, express){
 			resp.on('end', () => {
 
 		      var results = JSON.parse(data);
-		      		
+		      var img = "";
+		      if(results.full_picture){
+		      	img = results.full_picture;
+		      }else if(results.thumbnails){
+		      	img = results.thumbnails.data[0].uri;
+		      }else{
+		      	img ='https://graph.facebook.com/'+results.id+'/picture?type=normal&access_token=' + token
+		      }
+
 			  res.send({
 
 			  	main: {
 
-			  		title: (results.title ? results.title : 'no title'),
+			  		title: (results.title ? results.title : results.description ? results.description : results.name),
 			  		caption: (results.description ? results.description : results.name),
-			  		image: results.picture
+			  		image: img
 
 			  	},
 
