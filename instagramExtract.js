@@ -8,6 +8,15 @@ module.exports = function(app, express){
 	app.get('/extract/instagram', function (req, res) {
 	  
 		var str = req.query.url.split("/");
+
+		/*
+		
+		TO GET TOKEN, use this link:
+
+		https://www.instagram.com/oauth/authorize/?client_id=fab3019bb0d64b639e715d3e1efab9f4&redirect_uri=http://localhost/index&response_type=token&scope=basic+likes+comments+relationships
+
+		*/
+
 		var access_token = "33316313.fab3019.5fdebccc71094bdea504707c6ee011af";
 
 		https.get('https://api.instagram.com/v1/media/shortcode/'+str[4]+'?access_token=' + access_token, (resp) => {
