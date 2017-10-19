@@ -1,5 +1,7 @@
 function ytSearch(){
 
+	runLoading("Youtube");
+
 	$.get( "/extract/youtube", { 
 		url: $("#inpUrl").val()}, function( data ) {
               //console.log(data);
@@ -9,5 +11,7 @@ function ytSearch(){
 
               var html = JSON2HTMLList(data.summary);
               $('#other-data').html(html);
+
+              closeLoading();
         });
 }

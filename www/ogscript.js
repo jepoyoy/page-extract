@@ -1,5 +1,7 @@
 function ogSearch(){
 
+	runLoading("Blog/Article meta data");
+
 	$.get( "/extract/og", { 
 		url: $("#inpUrl").val()}, function( data ) {
               //console.log(data);
@@ -9,5 +11,7 @@ function ogSearch(){
 
               var html = JSON2HTMLList(data.summary);
               $('#other-data').html(html);
+
+              closeLoading();
         });
 }

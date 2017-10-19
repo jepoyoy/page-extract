@@ -27,6 +27,8 @@ window.fbAsyncInit = function() {
                 if (response.status === 'connected') {
                     var accessToken = response.authResponse.accessToken;
 
+                    runLoading("Facebook");
+
                     $.get( "/extract/facebook", { url: $("#inpUrl").val(), token: accessToken }, function( data ) {
                           //console.log(data);
                           $("#inpTitle").val(data.main.title);
@@ -35,6 +37,8 @@ window.fbAsyncInit = function() {
 
                           var html = JSON2HTMLList(data.summary);
                           $('#other-data').html(html);
+
+                          closeLoading();
                     });
 
 

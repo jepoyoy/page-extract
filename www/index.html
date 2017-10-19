@@ -21,9 +21,16 @@
 
   <body>
     <div id="fb-root"></div>
+    <div id="ig-root"></div>
+    
+    <script src="index.js"></script>
+
     <script src="fbscript.js"></script>
     <script src="ytscript.js"></script>
     <script src="ogscript.js"></script>
+
+    <script src="ig-min.js"></script>
+    <script src="igscript.js"></script>
 
     <div class="container">
 
@@ -35,15 +42,10 @@
           <div class="form-group">
             <input type="text" class="form-control" id="inpUrl" placeholder="Input URL here">
           </div>
-          <button id="login" onclick="javascript:fbSearch(); return false;" class="btn btn-primary">
-            Fetch data in FB
+          <button id="login" onclick="javascript:contextSearch(); return false;" class="btn btn-primary">
+            FETCH DATA
           </button>
-          <button id="login" onclick="javascript:ytSearch(); return false;" class="btn btn-danger">
-            Fetch data in Youtube
-          </button>
-          <button id="login" onclick="javascript:ogSearch(); return false;" class="btn btn-info">
-            Fetch data in Blog / Article
-          </button>
+          <span style="display:none" id="loading"><img src="loading.gif"/>&nbsp;<span id="fetch-name"></span>&nbsp;fetch in process...</span>
         </form>
       </div>
 
