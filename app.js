@@ -18,6 +18,6 @@ app.use('/bower', express.static('bower_components'))
 
 var port = process.env.PORT || 80
 
-server.listen(port, function() {
+app.listen(port, function() {
     console.log("App is running on port " + port);
 });
