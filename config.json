@@ -1,0 +1,4 @@
+{
+    "apiEndpoint": "https://api.graphcms.com/simple/v1/StoriesAPI",
+    "languages": [{"value": "en_us", "name" : "English (EN)"}, {"value": "sv", "name" : "Swedish (SV)"}]
+}

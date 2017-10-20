@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "json2html-list": "^1.0.2"
+    "json2html-list": "^1.0.2",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47"
   }
 }
