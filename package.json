@@ -19,10 +19,12 @@
   },
   "homepage": "https://github.com/jepoyoy/page-extract#readme",
   "dependencies": {
+    "apollo-client": "^1.9.3",
     "body-parser": "^1.18.2",
     "bower": "1.8.2",
     "express": "^4.16.2",
     "filestack-js": "^0.9.9",
+    "graphql-tag": "^2.5.0",
     "node-fetch": "^1.7.3",
     "open-graph": "^0.2.3"
   }
