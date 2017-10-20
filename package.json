@@ -23,6 +23,7 @@
     "bower": "1.8.2",
     "express": "^4.16.2",
     "filestack-js": "^0.9.9",
+    "node-fetch": "^1.7.3",
     "open-graph": "^0.2.3"
   }
 }
