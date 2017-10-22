@@ -25,7 +25,7 @@ module.exports = function(app, express){
     			
 					queryParams = {
 						objId : str[5],
-						fields : "full_picture,link,name,likes.limit(0).summary(true),reactions.limit(0).summary(true),created_time",
+						fields : "full_picture,message,description,link,name,likes.limit(0).summary(true),reactions.limit(0).summary(true),created_time",
 						prefixObjId : data.id + "_",
 						userid: data.id
 					}
@@ -49,7 +49,7 @@ module.exports = function(app, express){
 
 					queryParams = {
 						objId : str[5],
-						fields : "title,description,created_time,picture,thumbnails,source,likes.limit(0),reactions.limit(0),permalink_url,created_time",
+						fields : "title,description,created_time,picture,thumbnails,source,likes.limit(0).summary(true),reactions.limit(0).summary(true),permalink_url",
 						prefixObjId : "",
 						userid: data.id
 					}
@@ -151,6 +151,7 @@ module.exports = function(app, express){
 
 	function runFBGraph(queryParams, params, req, res){
 
+		console.log('https://graph.facebook.com/' + queryParams.prefixObjId + queryParams.objId+'?fields='+queryParams.fields+'&access_token=' + req.query.token);
 		https.get('https://graph.facebook.com/' + queryParams.prefixObjId + queryParams.objId+'?fields='+queryParams.fields+'&access_token=' + req.query.token, (resp) => {
 		
 			let data = '';
@@ -195,7 +196,7 @@ module.exports = function(app, express){
 			  	main: {
 
 			  		title: (results.title ? results.title : results.description ? results.description : results.name),
-			  		caption: (results.description ? results.description : results.name),
+			  		caption: (results.description ? results.description : results.message ? results.message : results.name),
 			  		image: img
 
 			  	},
