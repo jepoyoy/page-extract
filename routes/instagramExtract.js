@@ -127,8 +127,11 @@ module.exports = function(app, express){
 		.then(function(data){
 		
 			var extrct =  data.match(new RegExp("video_view_count\":" + "(.*)" + ", \"is_video"));
+			if(!extrct){
+				return callback("n/a",userObj);
+			}
 			console.log(extrct[extrct.length-1]);
-			callback(extrct[extrct.length-1],userObj);
+			return callback(extrct[extrct.length-1],userObj);
 		});
 	}
 
