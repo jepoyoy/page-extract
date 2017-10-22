@@ -49,7 +49,35 @@ module.exports = function(app, express){
 	  	console.log(req.body.inpLang);
 	  	console.log(req.body.inpTime);
 
-	  	res.send(req.body);
+		const createPostMutation = gql`mutation (
+			$title: String!,
+			$caption: String!,
+			$provider: String!,
+			$type: String!,
+			$language: String!,
+			$src: String!,
+			$url: String!,
+			$categoriesId: ID!){
+		  createPost(title: $title, caption: $caption, provider: $provider, type: $type, language: $language, sourceName: $src, urlSource: $url, categoriesId: $categoriesId) {
+		    id
+		  }
+		}`;
+
+		client.mutate({ 
+			mutation: createPostMutation, 
+			variables: {
+				title:req.body.inpTitle,
+				caption:req.body.inpCaption,
+				provider:"test",
+				type:"test",
+				language:req.body.inpLang,
+				src:"",
+				url:"",
+				categoriesId:req.body.inpCategory
+			} 
+		}).then((response) => {
+		    res.send(response.data)
+		})
 	 
 	})
 }

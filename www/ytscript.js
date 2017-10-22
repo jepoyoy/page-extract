@@ -9,7 +9,17 @@ function ytSearch(){
               $("#inpCaption").val(data.main.caption);
               $("#imgPreview").css("background-image", "url(" + data.main.image + ")"); 
 
-              var html = JSON2HTMLList(data.summary);
+              var options = {
+                formatProperty: function(prop) {
+                    var strong = document.createElement('strong');
+                    strong.appendChild(prop);
+                    strong.appendChild(document.createTextNode(': '));
+
+                    return strong;
+                }
+              }
+    
+              var html = JSON2HTMLList(data.summary,options);
               $('#other-data').html(html);
 
               closeLoading();

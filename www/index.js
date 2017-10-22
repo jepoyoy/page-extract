@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$('#inpTime').datetimepicker({
-		format: 'HH:mm'
+		format: 'YYYY-MM-DD HH:mm'
 	});
 	
 	var languages = [];
