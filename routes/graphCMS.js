@@ -50,9 +50,46 @@ module.exports = function(app, express){
 	  	console.log(req.body.inpTime);
 	  	
 	  	var mappings = JSON.parse(req.body.mappingsJson);
+	  	var mutationQuery;
+	  	var variables;
 
 	  	if(mappings.provider === "youtube"){
+	  		var ytGraphVars = getYoutubeMapVars(req, mappings);
+	  		mutationQuery = ytGraphVars.mutationQuery;
+	  		variables = ytGraphVars.variables;
+	  	}
+
+	  	if(mappings.provider === "facebook"){
+	  		var fbGraphVars = getFacebookMapVars(req, mappings);
+	  		mutationQuery = fbGraphVars.mutationQuery;
+	  		variables = fbGraphVars.variables;
+	  	}
+
+	  	if(mappings.provider === "instagram"){
+	  		var igGraphVars = getInstagramMapVars(req, mappings);
+	  		mutationQuery = igGraphVars.mutationQuery;
+	  		variables = igGraphVars.variables;
+	  	}
+
+	  	if(mappings.provider === "website"){
+	  		var wpGraphVars = getWebpageMapVars(req, mappings);
+	  		mutationQuery = wpGraphVars.mutationQuery;
+	  		variables = wpGraphVars.variables;
+	  	}
+
 	  	
+
+  		client.mutate({ 
+			mutation: mutationQuery, 
+			variables: variables
+		}).then((response) => {
+		    res.send(response.data)
+		});
+
+	})
+
+	function getYoutubeMapVars(req, mappings){
+
 		  	var youtubeMutation = gql`mutation (
 				$title: String!,
 				$caption: String!,
@@ -69,6 +106,7 @@ module.exports = function(app, express){
 		  		$urlsource: String!,
 		  		$urlmedia: String!,,
 		  		$urlthumbnail: String!,
+		  		$urlnew: String!,
 		  		$medialikes: Int!,
 		  		$mediadislikes: Int!,
 		  		$mediacomments: Int!,
@@ -94,6 +132,7 @@ module.exports = function(app, express){
 		  		urlsource: $urlsource,
 		  		urlmedia: $urlmedia,,
 		  		urlthumbnail: $urlthumbnail,
+		  		urlnew: $urlnew,
 		  		medialikes: $medialikes,
 		  		mediadislikes: $mediadislikes,
 		  		mediacomments: $mediacomments,
@@ -106,24 +145,24 @@ module.exports = function(app, express){
 			  }
 			}`;
 
-			client.mutate({ 
-			mutation: youtubeMutation, 
-			variables: {
+			var ytVariables = {
 				title:req.body.inpTitle,
 				caption:req.body.inpCaption,
 				language:req.body.inpLang,
 				categoriesId:req.body.inpCategory,
-				timepublished: new Date(req.body.inpTime),
+				timescheduled: new Date(req.body.inpTime),
+				timepublished: new Date(mappings.timepublished),
 				type: mappings.type,
 		  		provider: mappings.provider,
 		  		sourcename: mappings.sourcename, //channel name
-		  		sourceinfo: mappings.sourceinfo, //channel subs count
+		  		sourceinfo: mappings.sourceinfo.toString(), //channel subs count
 		  		sourceinfo2: mappings.sourceinfo2, //channel subs count
 		  		sourceicon: mappings.sourceicon, //channel image
 		  		sourceprofile: mappings.sourceprofile,
-		  		urlsource:mappings.urlmedia,
+		  		urlsource:mappings.urlsource,
 		  		urlmedia: mappings.urlmedia,
 		  		urlthumbnail: mappings.urlthubmnail || '#',
+		  		urlnew: req.body.filestackCDN,
 		  		medialikes: parseInt(mappings.medialikes) || 0,
 		  		mediadislikes: parseInt(mappings.mediadislikes) || 0,
 		  		mediacomments: parseInt(mappings.mediacomments) || 0,
@@ -133,12 +172,276 @@ module.exports = function(app, express){
 		  		urlmediaheight: parseInt(mappings.urlmediaheight) || 0,
 		  		urlmediawidth: parseInt(mappings.urlmediawidth) || 0
 
-			} 
-			}).then((response) => {
-			    res.send(response.data)
-			})
-	  	}
+			}
 
-	})
+			return {
+				mutationQuery: youtubeMutation,
+				variables: ytVariables
+			};
+	}
+
+	function getFacebookMapVars(req, mappings){
+
+		  	var fbMutation = gql`mutation (
+				$title: String!,
+				$caption: String!,
+				$language: String!,
+				$categoriesId: ID!,
+				$timescheduled: DateTime!,
+				$timepublished: DateTime!,
+				$type: String!,
+		  		$provider: String!,
+		  		$sourcename: String!,
+		  		$sourceinfo: String!,
+		  		$sourceicon: String!,
+		  		$sourceprofile: String!,
+		  		$urlsource: String!,
+		  		$urlmedia: String!,,
+		  		$urlthumbnail: String!,
+		  		$urlnew: String!,
+		  		$medialikes: Int!,
+		  		$mediacomments: Int!,
+		  		$urlthumbnailheight: Int!,
+		  		$urlthumbnailwidth: Int!
+			  ){
+			  createPost(
+			  	title: $title,
+				caption: $caption,
+				language: $language,
+				categoriesId: $categoriesId,
+				timescheduled: $timescheduled,
+				timepublished: $timepublished,
+				type: $type,
+		  		provider: $provider,
+		  		sourcename: $sourcename,
+		  		sourceinfo: $sourceinfo,
+		  		sourceicon: $sourceicon,
+		  		sourceprofile: $sourceprofile,
+		  		urlsource: $urlsource,
+		  		urlmedia: $urlmedia,,
+		  		urlthumbnail: $urlthumbnail,
+		  		urlnew: $urlnew,
+		  		medialikes: $medialikes,
+		  		mediacomments: $mediacomments,
+		  		urlthumbnailheight: $urlthumbnailheight,
+		  		urlthumbnailwidth: $urlthumbnailwidth) {
+			    id
+			  }
+			}`;
+
+			var fbVariables = {
+				title:req.body.inpTitle,
+				caption:req.body.inpCaption,
+				language:req.body.inpLang,
+				categoriesId:req.body.inpCategory,
+				timescheduled: new Date(req.body.inpTime),
+				timepublished: new Date(mappings.timepublished),
+				type: mappings.type,
+		  		provider: mappings.provider,
+		  		sourcename: mappings.sourcename, 
+		  		sourceinfo: mappings.sourceinfo.toString(), 
+		  		sourceicon: mappings.sourceicon,
+		  		sourceprofile: mappings.sourceprofile,
+		  		urlsource: mappings.urlsource,
+		  		urlmedia: mappings.urlmedia,
+		  		urlthumbnail: mappings.urlthubmnail || '#',
+		  		urlnew: req.body.filestackCDN,
+		  		medialikes: parseInt(mappings.medialikes) || 0,
+		  		mediacomments: parseInt(mappings.mediacomments) || 0,
+		  		urlthumbnailheight: parseInt(mappings.urlthubmnailheight) || 0,
+		  		urlthumbnailwidth: parseInt(mappings.urlthubmnailwidth) || 0
+			}
+
+			return {
+				mutationQuery: fbMutation,
+				variables: fbVariables
+			};
+	}
+
+	function getInstagramMapVars(req, mappings){
+
+	  	var igMutation = gql`mutation (
+			$title: String!,
+			$caption: String!,
+			$language: String!,
+			$categoriesId: ID!,
+			$timescheduled: DateTime!,
+			$timepublished: DateTime!,
+			$type: String!,
+	  		$provider: String!,
+	  		$sourcename: String!,
+	  		$sourcename2: String!,
+	  		$sourceinfo: String!,
+	  		$sourceicon: String!,
+	  		$sourceprofile: String!,
+	  		$urlsource: String!,
+	  		$urlmedia: String!,,
+	  		$urlthumbnail: String!,
+	  		$urlnew: String!,
+	  		$medialikes: Int!,
+	  		$mediacomments: Int!,
+	  		$mediaviews: Int!,
+	  		$urlthumbnailheight: Int!,
+	  		$urlthumbnailwidth: Int!,
+	  		$urlmediaheight: Int!,
+	  		$urlmediawidth: Int!
+		  ){
+		  createPost(
+		  	title: $title,
+			caption: $caption,
+			language: $language,
+			categoriesId: $categoriesId,
+			timescheduled: $timescheduled,
+			timepublished: $timepublished,
+			type: $type,
+	  		provider: $provider,
+	  		sourcename: $sourcename,
+	  		sourcename2: $sourcename2,
+	  		sourceinfo: $sourceinfo,
+	  		sourceicon: $sourceicon,
+	  		sourceprofile: $sourceprofile,
+	  		urlsource: $urlsource,
+	  		urlmedia: $urlmedia,
+	  		urlthumbnail: $urlthumbnail,
+	  		urlnew: $urlnew,
+	  		medialikes: $medialikes,
+	  		mediacomments: $mediacomments,
+	  		mediaviews: $mediaviews,
+	  		urlthumbnailheight: $urlthumbnailheight,
+	  		urlthumbnailwidth: $urlthumbnailwidth,
+	  		urlmediaheight: $urlmediaheight,
+	  		urlmediawidth: $urlmediawidth) {
+		    id
+		  }
+		}`;
+
+		var igVariables = {
+			title:req.body.inpTitle,
+			caption:req.body.inpCaption,
+			language:req.body.inpLang,
+			categoriesId:req.body.inpCategory,
+			timescheduled: new Date(req.body.inpTime),
+			timepublished: new Date(mappings.timepublished),
+			type: mappings.type,
+	  		provider: mappings.provider,
+	  		sourcename: mappings.sourcename, 
+	  		sourcename2: mappings.sourcename2, 
+	  		sourceinfo: mappings.sourceinfo.toString(), 
+	  		sourceicon: mappings.sourceicon,
+	  		sourceprofile: mappings.sourceprofile,
+	  		urlsource: mappings.urlsource,
+	  		urlmedia: mappings.urlmedia,
+	  		urlthumbnail: mappings.urlthubmnail,
+	  		urlnew: req.body.filestackCDN,
+	  		medialikes: parseInt(mappings.medialikes),
+	  		mediacomments: parseInt(mappings.mediacomments),
+	  		mediaviews: parseInt(mappings.mediaviews),
+	  		urlthumbnailheight: parseInt(mappings.urlthubmnailheight),
+	  		urlthumbnailwidth: parseInt(mappings.urlthubmnailwidth),
+	  		urlmediaheight: parseInt(mappings.urlmediaheight),
+	  		urlmediawidth: parseInt(mappings.urlmediawidth)
+		}
+
+		return {
+			mutationQuery: igMutation,
+			variables: igVariables
+		};
+	}
+
+	function getWebpageMapVars(req, mappings){
+
+	  	var wpMutation = gql`mutation (
+			$title: String!,
+			$caption: String!,
+			$language: String!,
+			$categoriesId: ID!,
+			$timescheduled: DateTime!,
+			$timepublished: DateTime!,
+			$type: String!,
+	  		$provider: String!,
+	  		$sourcename: String!,
+	  		$sourcename2: String!,
+	  		$sourceicon: String!,
+	  		$sourceprofile: String!,
+	  		$urlsource: String!,
+	  		$urlnew: String!
+		  ){
+		  createPost(
+		  	title: $title,
+			caption: $caption,
+			language: $language,
+			categoriesId: $categoriesId,
+			timescheduled: $timescheduled,
+			timepublished: $timepublished,
+			type: $type,
+	  		provider: $provider,
+	  		sourcename: $sourcename,
+	  		sourcename2: $sourcename2,
+	  		sourceicon: $sourceicon,
+	  		sourceprofile: $sourceprofile,
+	  		urlsource: $urlsource,
+	  		urlnew: $urlnew) {
+		    id
+		  }
+		}`;
+
+		var wpMutationNoPubDate = gql`mutation (
+			$title: String!,
+			$caption: String!,
+			$language: String!,
+			$categoriesId: ID!,
+			$timescheduled: DateTime!,
+			$type: String!,
+	  		$provider: String!,
+	  		$sourcename: String!,
+	  		$sourcename2: String!,
+	  		$sourceicon: String!,
+	  		$sourceprofile: String!,
+	  		$urlsource: String!,
+	  		$urlnew: String!,
+		  ){
+		  createPost(
+		  	title: $title,
+			caption: $caption,
+			language: $language,
+			categoriesId: $categoriesId,
+			timescheduled: $timescheduled,
+			type: $type,
+	  		provider: $provider,
+	  		sourcename: $sourcename,
+	  		sourcename2: $sourcename2,
+	  		sourceicon: $sourceicon,
+	  		sourceprofile: $sourceprofile,
+	  		urlsource: $urlsource,
+	  		urlnew: $urlnew) {
+		    id
+		  }
+		}`;
+
+		var wpVariables = {
+			title:req.body.inpTitle,
+			caption:req.body.inpCaption,
+			language:req.body.inpLang,
+			categoriesId:req.body.inpCategory,
+			timescheduled: new Date(req.body.inpTime),
+			type: mappings.type,
+	  		provider: mappings.provider,
+	  		sourcename: mappings.sourcename, 
+	  		sourcename2: mappings.sourcename2, 
+	  		sourceicon: mappings.sourceicon, 
+	  		sourceprofile: mappings.sourceprofile ? mappings.sourceprofile : '',
+	  		urlsource: mappings.urlsource,
+	  		urlnew: req.body.filestackCDN
+		}
+
+		if(mappings.timepublished != 'n/a'){
+			wpVariables.timepublished = mappings.timepublished;
+		}
+
+		return {
+			mutationQuery: mappings.timepublished != 'n/a' ? wpMutation : wpMutationNoPubDate,
+			variables: wpVariables
+		};
+	}
 }
 

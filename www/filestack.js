@@ -1,7 +1,9 @@
 function stackUpload(){
+	runUploadCMS();
 	filestackStoreURL(
 			$("#imgPreview").css("background-image").replace("url(\"","").replace("\")",""),
 			function(){
+				closeUploadCMS();
 				submitForm();
 			}
 		)

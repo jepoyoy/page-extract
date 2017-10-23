@@ -69,6 +69,7 @@ module.exports = function(app, express){
 			  		sourceicon: channelObj.items[0].snippet.thumbnails.default.url, //channel image
 			  		sourceprofile: 'https://www.youtube.com/channel/' + results.items[0].snippet.channelId,
 			  		urlmedia: img,
+			  		urlsource: 'https://www.youtube.com/watch?v=' + results.items[0].id,
 			  		urlthumbnail: results.items[0].snippet.thumbnails.default.url,
 			  		medialikes: results.items[0].statistics.likeCount,
 			  		mediadislikes: results.items[0].statistics.dislikeCount,

@@ -73,6 +73,7 @@ module.exports = function(app, express){
 
 	function getUserIDPhoto(queryParams, req, callback){
 
+		console.log('https://graph.facebook.com/' + queryParams.userid +'/picture?redirect&access_token=' + req.query.token)
 		https.get('https://graph.facebook.com/' + queryParams.userid +'/picture?redirect&access_token=' + req.query.token, (resp) => {
 
 			let data = '';
@@ -84,7 +85,8 @@ module.exports = function(app, express){
 			resp.on('end', () => {
 
 				var results = JSON.parse(data);
-				return callback(results.url);
+				console.log(results.data.url);
+				return callback(results.data.url);
 		     
 			});
 		 
@@ -94,6 +96,8 @@ module.exports = function(app, express){
 	}
 
 	function getUserIDFromWeb(url, callback){
+
+		url = url.replace("//web.", "//");
 
 		var postData = querystring.stringify({
 		    'url' : url
@@ -204,23 +208,21 @@ module.exports = function(app, express){
 			  	summary: {
 			  		type: POST_TYPE,
 			  		provider: FACEBOOK,
-			  		createdtime: results.created_time,
+			  		timepublished: results.created_time,
 			  		sourcename: USERNAME,
 			  		sourceinfo: results.likes.summary.total_count,
-			  		sourceicon: results.userIdPhotoUrl,
+			  		sourceicon: params.userIdPhotoUrl,
 			  		sourceprofile: USER_PROFILE_URL,
+			  		urlsource: req.query.url,
 			  		urlmedia: results.source ? results.source : img,
 			  		urlthubmnail: thumbnail,
 			  		medialikes: results.reactions.summary.total_count,
-			  		mediacomments: commentsCount
+			  		mediacomments: commentsCount,
+			  		urlthubmnailheight: results.thumbnails ? results.thumbnails.data[0].height : 0,
+			  		urlthubmnailwidth:  results.thumbnails ? results.thumbnails.data[0].width : 0
 			  	}
 
 			  };
-
-			  if(results.thumbnails){
-			  	output.urlthubmnailheight = results.thumbnails.data[0].height;
-			  	output.urlthubmnailwidth =  results.thumbnails.data[0].width;
-			  }
 
 			  return res.send(output);
 			});

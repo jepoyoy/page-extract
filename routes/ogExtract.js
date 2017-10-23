@@ -26,16 +26,16 @@ module.exports = function(app, express){
 
 			  		title: meta.title,
 			  		caption: meta.description ? meta.description : meta.title,
-			  		image: meta.image.url ? meta.image.url : 'http://sanrafael.gov.ph/images/products-no-image.png'
+			  		image: meta.image ? meta.image.url : 'http://sanrafael.gov.ph/images/products-no-image.png'
 
 			  	},
 
 			  	summary: {
 			  		type: POST_TYPE,
 			  		provider: EXTRACT_SOURCE,
-			  		createdtime: allmeta.jsonLd ? allmeta.jsonLd.datePublished : 'n/a',
+			  		timepublished: allmeta.jsonLd ? new Date(allmeta.jsonLd.datePublished) : 'n/a',
 			  		sourcename: meta.site_name, 
-			  		sourcename2: meta.site_name.split("/")[2], 
+			  		sourcename2: meta.url.split("/")[2], 
 			  		sourceicon: favicon_url,
 			  		urlsource: meta.url
 			  	}

@@ -53,10 +53,11 @@
             <input type="text" class="form-control" id="inpUrl" placeholder="Input URL here">
           </div>
           <button id="login" onclick="javascript:contextSearch(); return false;" class="btn btn-primary">
-            FETCH DATA
+            <span class="btnTxt">FETCH DATA</span>
+            <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;<span id="fetch-name"></span>&nbsp;fetch in process...</span>
           </button>
           
-          <span style="display:none" id="loading"><img src="loading.gif"/>&nbsp;<span id="fetch-name"></span>&nbsp;fetch in process...</span>
+          
         </form>
       </div>
 
@@ -105,11 +106,12 @@
                 </div></div>
             </div>
             <input type="hidden" name="filestackCDN" id="filestackCDN" />
-            <input type="text" name="mappingsJson" id="mappingsJson" />
+            <input type="hidden" name="mappingsJson" id="mappingsJson" />
           </form>
 
           <button id="upload" onclick="javascript:stackUpload(); return false;" class="btn btn-primary">
-            POST CONTENT TO CMS
+            <span class="btnTxt">POST CONTENT TO CMS</span>
+            <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;Uploading to Graph CMS...</span>
           </button>
 
           <br/>

@@ -61,7 +61,7 @@ module.exports = function(app, express){
 				  	summary: {
 				  		type: results.data.type,
 				  		provider: EXTRACT_SOURCE,
-				  		createdtime: new Date(parseInt(results.data.created_time)).toISOString(),
+				  		timepublished: new Date(parseInt(results.data.created_time)).toISOString(),
 				  		sourcename: results.data.user.username, 
 				  		sourcename2: results.data.user.full_name, 
 				  		sourceinfo: userObj.data.counts.followed_by, //followedby
@@ -130,7 +130,7 @@ module.exports = function(app, express){
 		
 			var extrct =  data.match(new RegExp("video_view_count\":" + "(.*)" + ", \"is_video"));
 			if(!extrct){
-				return callback("n/a",userObj);
+				return callback(0,userObj);
 			}
 			console.log(extrct[extrct.length-1]);
 			return callback(extrct[extrct.length-1],userObj);
