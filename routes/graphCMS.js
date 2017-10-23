@@ -113,7 +113,7 @@ module.exports = function(app, express){
 				caption:req.body.inpCaption,
 				language:req.body.inpLang,
 				categoriesId:req.body.inpCategory,
-				timepublished:req.body.inpCategory,
+				timepublished: new Date(req.body.inpTime),
 				type: mappings.type,
 		  		provider: mappings.provider,
 		  		sourcename: mappings.sourcename, //channel name
@@ -123,15 +123,15 @@ module.exports = function(app, express){
 		  		sourceprofile: mappings.sourceprofile,
 		  		urlsource:mappings.urlmedia,
 		  		urlmedia: mappings.urlmedia,
-		  		urlthumbnail: mappings.urlthubmnail,
-		  		medialikes: parseInt(mappings.medialikes),
-		  		mediadislikes: mappings.mediadislikes,
-		  		mediacomments: mappings.mediacomments,
-		  		mediaviews: mappings.mediaviews,
-		  		urlthumbnailheight: mappings.urlthubmnailheight,
-		  		urlthumbnailwidth: mappings.urlthubmnailwidth,
-		  		urlmediaheight: mappings.urlmediaheight,
-		  		urlmediawidth: mappings.urlmediawidth
+		  		urlthumbnail: mappings.urlthubmnail || '#',
+		  		medialikes: parseInt(mappings.medialikes) || 0,
+		  		mediadislikes: parseInt(mappings.mediadislikes) || 0,
+		  		mediacomments: parseInt(mappings.mediacomments) || 0,
+		  		mediaviews: parseInt(mappings.mediaviews) || 0,
+		  		urlthumbnailheight: parseInt(mappings.urlthubmnailheight) || 0,
+		  		urlthumbnailwidth: parseInt(mappings.urlthubmnailwidth) || 0,
+		  		urlmediaheight: parseInt(mappings.urlmediaheight) || 0,
+		  		urlmediawidth: parseInt(mappings.urlmediawidth) || 0
 
 			} 
 			}).then((response) => {
