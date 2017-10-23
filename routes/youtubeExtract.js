@@ -70,7 +70,7 @@ module.exports = function(app, express){
 			  		sourceprofile: 'https://www.youtube.com/channel/' + results.items[0].snippet.channelId,
 			  		urlmedia: img,
 			  		urlsource: 'https://www.youtube.com/watch?v=' + results.items[0].id,
-			  		urlthumbnail: results.items[0].snippet.thumbnails.default.url,
+			  		urlthumbnail: img,
 			  		medialikes: results.items[0].statistics.likeCount,
 			  		mediadislikes: results.items[0].statistics.dislikeCount,
 			  		mediacomments: results.items[0].statistics.commentCount,

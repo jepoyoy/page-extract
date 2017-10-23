@@ -47,7 +47,7 @@ module.exports = function(app, express){
 	  	console.log(req.body.inpCaption);
 	  	console.log(req.body.inpCategory);
 	  	console.log(req.body.inpLang);
-	  	console.log(req.body.inpTime);
+	  	console.log(new Date(req.body.inpTime).toISOString());
 	  	
 	  	var mappings = JSON.parse(req.body.mappingsJson);
 	  	var mutationQuery;
@@ -93,6 +93,7 @@ module.exports = function(app, express){
 		  	var youtubeMutation = gql`mutation (
 				$title: String!,
 				$caption: String!,
+				$timescheduled: DateTime!,
 				$timepublished: DateTime!,
 				$language: String!,
 				$categoriesId: ID!,
@@ -119,6 +120,7 @@ module.exports = function(app, express){
 			  createPost(
 			  	title: $title,
 				caption: $caption,
+				timescheduled: $timescheduled,
 				timepublished: $timepublished,
 				language: $language,
 				categoriesId: $categoriesId,
@@ -150,7 +152,7 @@ module.exports = function(app, express){
 				caption:req.body.inpCaption,
 				language:req.body.inpLang,
 				categoriesId:req.body.inpCategory,
-				timescheduled: new Date(req.body.inpTime),
+				timescheduled: new Date(req.body.inpTime).toISOString(),
 				timepublished: new Date(mappings.timepublished),
 				type: mappings.type,
 		  		provider: mappings.provider,
@@ -161,7 +163,7 @@ module.exports = function(app, express){
 		  		sourceprofile: mappings.sourceprofile,
 		  		urlsource:mappings.urlsource,
 		  		urlmedia: mappings.urlmedia,
-		  		urlthumbnail: mappings.urlthubmnail || '#',
+		  		urlthumbnail: mappings.urlthumbnail,
 		  		urlnew: req.body.filestackCDN,
 		  		medialikes: parseInt(mappings.medialikes) || 0,
 		  		mediadislikes: parseInt(mappings.mediadislikes) || 0,
@@ -234,7 +236,7 @@ module.exports = function(app, express){
 				caption:req.body.inpCaption,
 				language:req.body.inpLang,
 				categoriesId:req.body.inpCategory,
-				timescheduled: new Date(req.body.inpTime),
+				timescheduled: new Date(req.body.inpTime).toISOString(),
 				timepublished: new Date(mappings.timepublished),
 				type: mappings.type,
 		  		provider: mappings.provider,
@@ -320,7 +322,7 @@ module.exports = function(app, express){
 			caption:req.body.inpCaption,
 			language:req.body.inpLang,
 			categoriesId:req.body.inpCategory,
-			timescheduled: new Date(req.body.inpTime),
+			timescheduled: new Date(req.body.inpTime).toISOString(),
 			timepublished: new Date(mappings.timepublished),
 			type: mappings.type,
 	  		provider: mappings.provider,
@@ -423,7 +425,7 @@ module.exports = function(app, express){
 			caption:req.body.inpCaption,
 			language:req.body.inpLang,
 			categoriesId:req.body.inpCategory,
-			timescheduled: new Date(req.body.inpTime),
+			timescheduled: new Date(req.body.inpTime).toISOString(),
 			type: mappings.type,
 	  		provider: mappings.provider,
 	  		sourcename: mappings.sourcename, 

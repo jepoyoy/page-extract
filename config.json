@@ -1,6 +1,6 @@
 {
     "apiEndpoint": "https://api.graphcms.com/simple/v1/StoriesAPI",
-    "languages": [{"value": "EN", "name" : "English (EN)"}, {"value": "SV", "name" : "Swedish (SV)"}],
-    "type": [{"value": "VIDEO", "name" : "Video"}, {"value": "IMAGE", "name" : "Image"}, {"value": "TEXT", "name" : "Text"} ,{"value": "AUDIO", "name" : "Audio"}]
+    "languages": [{"value": "en", "name" : "English (EN)"}, {"value": "sv", "name" : "Swedish (SV)"}],
+    "type": [{"value": "video", "name" : "Video"}, {"value": "image", "name" : "Image"}, {"value": "text", "name" : "Text"} ,{"value": "audio", "name" : "Audio"}]
 
 }
