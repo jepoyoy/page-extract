@@ -48,37 +48,97 @@ module.exports = function(app, express){
 	  	console.log(req.body.inpCategory);
 	  	console.log(req.body.inpLang);
 	  	console.log(req.body.inpTime);
+	  	
+	  	var mappings = JSON.parse(req.body.mappingsJson);
 
-		const createPostMutation = gql`mutation (
-			$title: String!,
-			$caption: String!,
-			$provider: String!,
-			$type: String!,
-			$language: String!,
-			$src: String!,
-			$url: String!,
-			$categoriesId: ID!){
-		  createPost(title: $title, caption: $caption, provider: $provider, type: $type, language: $language, sourceName: $src, urlSource: $url, categoriesId: $categoriesId) {
-		    id
-		  }
-		}`;
+	  	if(mappings.provider === "youtube"){
+	  	
+		  	var youtubeMutation = gql`mutation (
+				$title: String!,
+				$caption: String!,
+				$timepublished: DateTime!,
+				$language: String!,
+				$categoriesId: ID!,
+				$type: String!,
+		  		$provider: String!,
+		  		$sourcename: String!,
+		  		$sourceinfo: String!,
+		  		$sourceinfo2: String!,
+		  		$sourceicon: String!,
+		  		$sourceprofile: String!,
+		  		$urlsource: String!,
+		  		$urlmedia: String!,,
+		  		$urlthumbnail: String!,
+		  		$medialikes: Int!,
+		  		$mediadislikes: Int!,
+		  		$mediacomments: Int!,
+		  		$mediaviews: Int!,
+		  		$urlthumbnailheight: Int!,
+		  		$urlthumbnailwidth: Int!,
+		  		$urlmediaheight: Int!,
+		  		$urlmediawidth: Int!
+			  ){
+			  createPost(
+			  	title: $title,
+				caption: $caption,
+				timepublished: $timepublished,
+				language: $language,
+				categoriesId: $categoriesId,
+				type: $type,
+		  		provider: $provider,
+		  		sourcename: $sourcename,
+		  		sourceinfo: $sourceinfo,
+		  		sourceinfo2: $sourceinfo2,
+		  		sourceicon: $sourceicon,
+		  		sourceprofile: $sourceprofile,
+		  		urlsource: $urlsource,
+		  		urlmedia: $urlmedia,,
+		  		urlthumbnail: $urlthumbnail,
+		  		medialikes: $medialikes,
+		  		mediadislikes: $mediadislikes,
+		  		mediacomments: $mediacomments,
+		  		mediaviews: $mediaviews,
+		  		urlthumbnailheight: $urlthumbnailheight,
+		  		urlthumbnailwidth: $urlthumbnailwidth,
+		  		urlmediaheight: $urlmediaheight,
+		  		urlmediawidth: $urlmediawidth) {
+			    id
+			  }
+			}`;
 
-		client.mutate({ 
-			mutation: createPostMutation, 
+			client.mutate({ 
+			mutation: youtubeMutation, 
 			variables: {
 				title:req.body.inpTitle,
 				caption:req.body.inpCaption,
-				provider:"test",
-				type:"test",
 				language:req.body.inpLang,
-				src:"",
-				url:"",
-				categoriesId:req.body.inpCategory
+				categoriesId:req.body.inpCategory,
+				timepublished:req.body.inpCategory,
+				type: mappings.type,
+		  		provider: mappings.provider,
+		  		sourcename: mappings.sourcename, //channel name
+		  		sourceinfo: mappings.sourceinfo, //channel subs count
+		  		sourceinfo2: mappings.sourceinfo2, //channel subs count
+		  		sourceicon: mappings.sourceicon, //channel image
+		  		sourceprofile: mappings.sourceprofile,
+		  		urlsource:mappings.urlmedia,
+		  		urlmedia: mappings.urlmedia,
+		  		urlthumbnail: mappings.urlthubmnail,
+		  		medialikes: parseInt(mappings.medialikes),
+		  		mediadislikes: mappings.mediadislikes,
+		  		mediacomments: mappings.mediacomments,
+		  		mediaviews: mappings.mediaviews,
+		  		urlthumbnailheight: mappings.urlthubmnailheight,
+		  		urlthumbnailwidth: mappings.urlthubmnailwidth,
+		  		urlmediaheight: mappings.urlmediaheight,
+		  		urlmediawidth: mappings.urlmediawidth
+
 			} 
-		}).then((response) => {
-		    res.send(response.data)
-		})
-	 
+			}).then((response) => {
+			    res.send(response.data)
+			})
+	  	}
+
 	})
 }
 

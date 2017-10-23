@@ -5,7 +5,7 @@ const querystring = require('querystring');
 const cheerio = require('cheerio');
 var fetch = require('node-fetch');
 
-const EXTRACT_SOURCE = "Instagram";
+const EXTRACT_SOURCE = "instagram";
 /*
 		
 TO GET TOKEN, use this link:
@@ -21,6 +21,8 @@ module.exports = function(app, express){
 	  
 		var str = req.query.url.split("/");
 
+		console.log('https://api.instagram.com/v1/media/shortcode/'+str[4]+'?access_token=' + TOKEN);
+		
 		https.get('https://api.instagram.com/v1/media/shortcode/'+str[4]+'?access_token=' + TOKEN, (resp) => {
 			
 
@@ -59,23 +61,23 @@ module.exports = function(app, express){
 				  	summary: {
 				  		type: results.data.type,
 				  		provider: EXTRACT_SOURCE,
-				  		created_time: results.data.created_time,
-				  		sourceName: results.data.user.username, 
-				  		sourceName2: results.data.user.full_name, 
-				  		sourceInfo: userObj.data.counts.followed_by, //followedby
-				  		sourceInfo2: userObj.data.bio, //bio
-				  		sourceIcon: results.data.user.profile_picture,
-				  		sourceProfile: 'https://www.insatgram.com/' + results.data.user.username,
-				  		urlSource: results.data.link,
-				  		urlMedia: results.data.type == 'video' ? results.data.videos.standard_resolution.url : results.data.images.standard_resolution.url,
-				  		urlThubmnail: results.data.images.thumbnail.url,
-				  		mediaLikes: results.data.likes.count,
-				  		mediaComments: results.data.comments.count,
-				  		mediaViews: views, //manually scraped
-				  		urlThubmnailheight: results.data.images.thumbnail.height,
-				  		urlThubmnailwidth: results.data.images.thumbnail.width,
-				  		urlMediaheight: results.data.images.standard_resolution.height,
-				  		urlMediawidth: results.data.images.standard_resolution.width
+				  		createdtime: new Date(parseInt(results.data.created_time)).toISOString(),
+				  		sourcename: results.data.user.username, 
+				  		sourcename2: results.data.user.full_name, 
+				  		sourceinfo: userObj.data.counts.followed_by, //followedby
+				  		sourceinfo2: userObj.data.bio, //bio
+				  		sourceicon: results.data.user.profile_picture,
+				  		sourceprofile: 'https://www.insatgram.com/' + results.data.user.username,
+				  		urlsource: results.data.link,
+				  		urlmedia: results.data.type == 'video' ? results.data.videos.standard_resolution.url : results.data.images.standard_resolution.url,
+				  		urlthubmnail: results.data.images.thumbnail.url,
+				  		medialikes: results.data.likes.count,
+				  		mediacomments: results.data.comments.count,
+				  		mediaviews: views, //manually scraped
+				  		urlthubmnailheight: results.data.images.thumbnail.height,
+				  		urlthubmnailwidth: results.data.images.thumbnail.width,
+				  		urlmediaheight: results.data.images.standard_resolution.height,
+				  		urlmediawidth: results.data.images.standard_resolution.width
 				  	}
 
 				  });

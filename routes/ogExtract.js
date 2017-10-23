@@ -5,8 +5,8 @@ const querystring = require('querystring');
 const scrape = require('html-metadata');
 const favicon = require('favicon');
 
-const EXTRACT_SOURCE = "Website";
-const POST_TYPE = "Text";
+const EXTRACT_SOURCE = "website";
+const POST_TYPE = "text";
 
 module.exports = function(app, express){
 
@@ -20,7 +20,7 @@ module.exports = function(app, express){
 	      	
 	      	meta = allmeta.openGraph;
 
-			  res.send({
+	      	var output = {
 
 			  	main: {
 
@@ -33,20 +33,28 @@ module.exports = function(app, express){
 			  	summary: {
 			  		type: POST_TYPE,
 			  		provider: EXTRACT_SOURCE,
-			  		created_time: allmeta.jsonLd ? allmeta.jsonLd.datePublished : 'no date',
-			  		sourceName: meta.site_name, 
-			  		sourceName2: meta.site_name.split("/")[2], 
-			  		sourceIcon: favicon_url,
-			  		urlSource: meta.url,
-			  		urlMedia: meta.image.url ? meta.image.url : 'n/a',
-			  		urlThubmnail: meta.image.url ? meta.image.url : 'n/a',
-			  		urlThubmnailheight: meta.image ? meta.image.height: 'n/a',
-			  		urlThubmnailwidth: meta.image ? meta.image.width: 'n/a',
-			  		urlMediaheight: meta.image ? meta.image.height: 'n/a',
-			  		urlMediawidth: meta.image ? meta.image.width: 'n/a'
+			  		createdtime: allmeta.jsonLd ? allmeta.jsonLd.datePublished : 'n/a',
+			  		sourcename: meta.site_name, 
+			  		sourcename2: meta.site_name.split("/")[2], 
+			  		sourceicon: favicon_url,
+			  		urlsource: meta.url
 			  	}
 
-			  });
+			  };
+
+			if(meta.image.url){
+				output.summary.urlmedia = meta.image.url;
+				output.summary.urlthubmnail = meta.image.url;
+			}
+
+			if(meta.image){
+				output.summary.urlthubmnailheight = meta.image.height;
+				output.summary.urlthubmnailwidth = meta.image.width;
+				output.summary.urlmediaheight = meta.image.height;
+				output.summary.urlmediawidth = meta.image.width;
+			}
+
+			res.send(output);
 		});   
 		});
 	})

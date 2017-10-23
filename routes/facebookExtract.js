@@ -3,7 +3,7 @@ const https = require('follow-redirects').https
 const app = express();
 const querystring = require('querystring'); 
 
-const EXTRACT_SOURCE = "Facebook";
+const EXTRACT_SOURCE = "facebook";
 
 module.exports = function(app, express){
 
@@ -31,7 +31,7 @@ module.exports = function(app, express){
 					}
 
 					//other parameters we can extract from here
-					params = { type: "TEXT", username : USER_NAME, profileURL: USER_PROFILE_URL }
+					params = { type: "text", username : USER_NAME, profileURL: USER_PROFILE_URL }
 
 				}else if(str.indexOf("photos") !== -1){
 
@@ -43,7 +43,7 @@ module.exports = function(app, express){
 					}
 
 					//other parameters we can extract from here
-					params = { type: "IMAGE", username : USER_NAME, profileURL: USER_PROFILE_URL  }
+					params = { type: "image", username : USER_NAME, profileURL: USER_PROFILE_URL  }
 
 				}else if(str.indexOf("videos") !== -1){
 
@@ -55,7 +55,7 @@ module.exports = function(app, express){
 					}
 
 					//other parameters we can extract from here
-					params = { type: "VIDEO", username : USER_NAME, profileURL: USER_PROFILE_URL  }
+					params = { type: "video", username : USER_NAME, profileURL: USER_PROFILE_URL  }
 
 				}
 
@@ -191,7 +191,7 @@ module.exports = function(app, express){
 		      	thumbnail =''
 		      }
 
-			  return res.send({
+		      var output = {
 
 			  	main: {
 
@@ -204,20 +204,25 @@ module.exports = function(app, express){
 			  	summary: {
 			  		type: POST_TYPE,
 			  		provider: FACEBOOK,
-			  		created_time: results.created_time,
-			  		sourceName: USERNAME,
-			  		sourceInfo: results.likes.summary.total_count,
-			  		sourceIcon: results.userIdPhotoUrl,
-			  		sourceProfile: USER_PROFILE_URL,
-			  		urlMedia: results.source ? results.source : img,
-			  		urlThubmnail: thumbnail,
-			  		mediaLikes: results.reactions.summary.total_count,
-			  		mediaComments: commentsCount,
-			  		urlThubmnailheight: results.thumbnails ? results.thumbnails.data[0].height : '',
-			  		urlThubmnailwidth: results.thumbnails ? results.thumbnails.data[0].width : ''
+			  		createdtime: results.created_time,
+			  		sourcename: USERNAME,
+			  		sourceinfo: results.likes.summary.total_count,
+			  		sourceicon: results.userIdPhotoUrl,
+			  		sourceprofile: USER_PROFILE_URL,
+			  		urlmedia: results.source ? results.source : img,
+			  		urlthubmnail: thumbnail,
+			  		medialikes: results.reactions.summary.total_count,
+			  		mediacomments: commentsCount
 			  	}
 
-			  });
+			  };
+
+			  if(results.thumbnails){
+			  	output.urlthubmnailheight = results.thumbnails.data[0].height;
+			  	output.urlthubmnailwidth =  results.thumbnails.data[0].width;
+			  }
+
+			  return res.send(output);
 			});
 		 
 		}).on("error", (err) => {

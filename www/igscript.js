@@ -8,6 +8,7 @@ function igSearch(){
           $("#inpTitle").val(data.main.title);
           $("#inpCaption").val(data.main.caption);
           $("#imgPreview").css("background-image", "url(" + data.main.image + ")"); 
+          $("#mappingsJson").val(JSON.stringify(data.summary));
 
           var options = {
             formatProperty: function(prop) {

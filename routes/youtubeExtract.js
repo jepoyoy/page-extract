@@ -3,8 +3,8 @@ const https = require('https');
 const app = express();
 const querystring = require('querystring'); 
 
-const EXTRACT_SOURCE = "Facebook";
-const POST_TYPE = "Video";
+const EXTRACT_SOURCE = "youtube";
+const POST_TYPE = "video";
 const TOKEN = "AIzaSyAbJidH_pJb_QznRu8-33_WQyDYOIcFTrw";
 
 module.exports = function(app, express){
@@ -62,22 +62,22 @@ module.exports = function(app, express){
 			  	summary: {
 			  		type: POST_TYPE,
 			  		provider: EXTRACT_SOURCE,
-			  		created_time: results.items[0].snippet.publishedAt,
-			  		sourceName: channelObj.items[0].snippet.title, //channel name
-			  		sourceInfo: channelObj.items[0].statistics.subscriberCount, //channel subs count
-			  		sourceInfo2: channelObj.items[0].statistics.viewCount, //channel subs count
-			  		sourceIcon: channelObj.items[0].snippet.thumbnails.default.url, //channel image
-			  		sourceProfile: 'https://www.youtube.com/channel/' + results.items[0].snippet.channelId,
-			  		urlMedia: img,
-			  		urlThubmnail: results.items[0].snippet.thumbnails.default.url,
-			  		mediaLikes: results.items[0].statistics.likeCount,
-			  		mediaDislikes: results.items[0].statistics.dislikeCount,
-			  		mediaComments: results.items[0].statistics.commentCount,
-			  		mediaViews: results.items[0].statistics.viewCount,
-			  		urlThubmnailheight: results.items[0].snippet.thumbnails.default.height,
-			  		urlThubmnailwidth: results.items[0].snippet.thumbnails.default.width,
-			  		urlMediaheight: imgH,
-			  		urlMediawidth: imgW
+			  		timepublished: results.items[0].snippet.publishedAt,
+			  		sourcename: channelObj.items[0].snippet.title, //channel name
+			  		sourceinfo: channelObj.items[0].statistics.subscriberCount, //channel subs count
+			  		sourceinfo2: channelObj.items[0].statistics.viewCount, //channel subs count
+			  		sourceicon: channelObj.items[0].snippet.thumbnails.default.url, //channel image
+			  		sourceprofile: 'https://www.youtube.com/channel/' + results.items[0].snippet.channelId,
+			  		urlmedia: img,
+			  		urlthumbnail: results.items[0].snippet.thumbnails.default.url,
+			  		medialikes: results.items[0].statistics.likeCount,
+			  		mediadislikes: results.items[0].statistics.dislikeCount,
+			  		mediacomments: results.items[0].statistics.commentCount,
+			  		mediaviews: results.items[0].statistics.viewCount,
+			  		urlthumbnailheight: results.items[0].snippet.thumbnails.default.height,
+			  		urlthumbnailwidth: results.items[0].snippet.thumbnails.default.width,
+			  		urlmediaheight: imgH,
+			  		urlmediawidth: imgW
 
 			  	}
 
