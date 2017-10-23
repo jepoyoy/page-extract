@@ -1,8 +1,15 @@
 $(document).ready(function(){
+
+	$("#other-data").toggle();
+
 	$('#inpTime').datetimepicker({
 		format: 'YYYY-MM-DD HH:mm'
 	});
 	
+	$('#toggleView').click(function(){
+		$("#other-data").toggle();
+	});
+
 	var languages = [];
 	$.getJSON("/graphcms/languages", function(result) {
 	    $.each(result, function(item) {
@@ -17,6 +24,8 @@ $(document).ready(function(){
 function contextSearch(){
 
 	var url = $("#inpUrl").val();
+
+	if(url.length <= 0){ alert("url is required"); return;}
 
 	if(url.indexOf("facebook.com/") !== -1){
 		fbSearch();
@@ -76,6 +85,53 @@ function loadGraphCMSCategories(){
 	});
 }
 
-function submitForm(){
-	$("#mainForm").submit();
+function validateForm(){
+		//validation
+	if($("#inpTitle").val().length <= 0){
+		alert("Title is required");
+		return false;
+	}
+
+	if($("#inpCaption").val().length <= 0){
+		alert("Caption is required");
+		return false;
+	}
+
+	if($("#inpTime").val().length <= 0){
+		alert("Time is required");
+		return false;
+	}
+
+	return true;
 }
+
+function submitForm(){
+
+	$("#mainForm").ajaxSubmit({
+		success: function(data, textStatus, jqXHR, $form){
+			alert("Uploaded Successfully!");
+			clearForm();
+		}
+	})
+}
+
+function clearForm(){
+
+	$("#inpUrl").val("");
+	$("#mainForm").find("input[type=text], textarea").val("");
+	$("#other-data").html("");
+	$("#imgPreview").css("background-image", "url(http://via.placeholder.com/350x250)");  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

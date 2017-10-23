@@ -1,4 +1,5 @@
 function stackUpload(){
+	if(validateForm()){
 	runUploadCMS();
 	filestackStoreURL(
 			$("#imgPreview").css("background-image").replace("url(\"","").replace("\")",""),
@@ -7,6 +8,7 @@ function stackUpload(){
 				submitForm();
 			}
 		)
+	}
 }
 
 function filestackStoreURL(url, callback){
