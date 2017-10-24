@@ -8,6 +8,7 @@ function ytSearch(){
               $("#inpTitle").val(data.main.title);
               $("#inpCaption").val(data.main.caption);
               $("#imgPreview").css("background-image", "url(" + data.main.image + ")");
+              $("#imgPreviewSrc").val(data.main.image);  
               $("#mappingsJson").val(JSON.stringify(data.summary));
 
               var options = {

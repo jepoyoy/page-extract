@@ -47,7 +47,8 @@ function uploadImage(){
 		    onOpen: function(){
 
 		    	setTimeout(function() { 
-		    	 		var $input = $('.fsp-url-source__input').val($("#imgPreview").css("background-image").replace("url(\"","").replace("\")",""));
+		    			var textInput = $("#imgPreviewSrc").val();
+		    	 		var $input = $('.fsp-url-source__input').val(textInput);
 						var e = document.createEvent('HTMLEvents');
 						e.initEvent('input', true, true);
 						$input[0].dispatchEvent(e);
