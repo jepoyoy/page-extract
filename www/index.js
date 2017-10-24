@@ -2,8 +2,10 @@ $(document).ready(function(){
 
 	$("#other-data").toggle();
 
+	var dateNow = new Date();
 	$('#datetimepicker2').datetimepicker({
-		format: 'YYYY-MM-DD HH:mm'
+		format: 'YYYY-MM-DD HH:mm',
+		defaultDate: dateNow
 	});
 	
 	$('#toggleView').click(function(){
