@@ -43,7 +43,7 @@ function uploadImage(){
 	 return client.pick({
 		    maxFiles: 1,
 		    preferLinkOverStore: true,
-		    fromSources: ['url'],
+		    fromSources: ['url', 'local_file_system'],
 		    onOpen: function(){
 
 		    	setTimeout(function() { 
