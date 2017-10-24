@@ -48,13 +48,13 @@
       <div style="clear:both">&nbsp;</div>
 
       <div>
-        <h1>Source Link</h1>
+        <h3>Source</h3>
         <form class="form-inline">
           <div class="form-group">
             <input type="text" class="form-control" id="inpUrl" placeholder="Input URL here">
           </div>
           <button id="login" onclick="javascript:contextSearch(); return false;" class="btn btn-primary">
-            <span class="btnTxt">FETCH DATA</span>
+            <span class="btnTxt">Fetch</span>
             <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;<span id="fetch-name"></span>&nbsp;fetch in process...</span>
           </button>
           
@@ -64,10 +64,12 @@
 
     </div><!-- /.container -->
 
+    <div style="clear:both">&nbsp;</div>
+
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <h1>Source Link</h1>
+          <h3>Data</h3>
 
           <form id="mainForm" method="POST" action="/graphcms/submit">
             <div class="form-group row">
@@ -99,10 +101,10 @@
             <div class="form-group row">
               <label for="inpTime" class="col-sm-2 col-form-label">Time</label>
               <div class="col-sm-10">
-              <div class='input-group date' >
+              <div class='input-group date' id="datetimepicker2">
                     <input type='text' class="form-control" id='inpTime' name="inpTime" />
                     <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
+                        <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div></div>
             </div>
@@ -112,24 +114,26 @@
           </form>
 
           <button id="upload" onclick="javascript:stackUpload(); return false;" class="btn btn-primary">
-            <span class="btnTxt">POST CONTENT TO CMS</span>
+            <span class="btnTxt">Post Content</span>
             <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;Uploading to Graph CMS...</span>
           </button>
 
-          <button id="clear" onclick="javascript:clearForm(); return false;" class="btn btn-danger">
-            <span class="btnTxt">CLEAR</span>
+          <button id="clear" onclick="javascript:clearForm(); return false;" class="btn btn-secondary" style="background-color:gray;color:white">
+            <span class="btnTxt">Clear</span>
           </button>
 
           <br/>
 
-          <h3>Other data: &nbsp; <a style="font-size:0.8em" id="toggleView" href="javascript:void(0)">Toggle view</a></h3>
+          <h3><a style="font-size:0.8em" id="toggleView" href="javascript:void(0)">Toggle </a></h3>
 
           <div id="other-data"></div>
 
         </div>
         <div class="col-md-4">
-          <div style="width:350px;height:200px;background-repeat:no-repeat;background-size:contain;background-image: url(http://via.placeholder.com/350x250)" id="imgPreview"></div>
-          <a href="javascript:uploadImage()">EDIT IMAGE</a>
+          <div style="width:350px;height:200px;background-position:center;background-color:#CCCCCC;background-repeat:no-repeat;background-size:contain;background-image: url(http://via.placeholder.com/350x250)" id="imgPreview"></div>
+          <div style="text-align: center; width:350px;">
+            <a href="javascript:uploadImage()">Edit Image</a>
+          </div>
       </div>
     </div>
 

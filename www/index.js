@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	$("#other-data").toggle();
 
-	$('#inpTime').datetimepicker({
+	$('#datetimepicker2').datetimepicker({
 		format: 'YYYY-MM-DD HH:mm'
 	});
 	
