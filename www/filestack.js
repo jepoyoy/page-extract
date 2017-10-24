@@ -42,6 +42,11 @@ function uploadImage(){
 	
 	 return client.pick({
 		    maxFiles: 1,
+		    transformations: {
+			    crop: {
+			      aspectRatio: 4 / 3
+			    }
+			  },
 		    preferLinkOverStore: true,
 		    fromSources: ['url', 'local_file_system'],
 		    onOpen: function(){
