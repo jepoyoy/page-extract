@@ -55,9 +55,9 @@
           </div>
           <button id="login" onclick="javascript:contextSearch(); return false;" class="btn btn-primary">
             <span class="btnTxt">Fetch</span>
-            <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;<span id="fetch-name"></span>&nbsp;fetch in process...</span>
           </button>
           
+          <span style="display:none" class="login-loading"><img src="ellip.gif"/>&nbsp;<span id="fetch-name"></span>&nbsp;fetch in process...</span>
           
         </form>
       </div>
@@ -115,12 +115,13 @@
 
           <button id="upload" onclick="javascript:stackUpload(); return false;" class="btn btn-primary">
             <span class="btnTxt">Post Content</span>
-            <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;Uploading...</span>
           </button>
 
           <button id="clear" onclick="javascript:clearForm(); return false;" class="btn btn-secondary" style="background-color:gray;color:white">
             <span class="btnTxt">Clear</span>
           </button>
+
+          <span style="display:none" class="upload-loading"><img src="ellip.gif"/>&nbsp;Uploading...</span>
 
           <span style="color:green;display:none" id="upload-complete"><span class="glyphicon glyphicon-ok"></span>&nbsp; Upload complete!</span>
 
@@ -132,7 +133,7 @@
 
         </div>
         <div class="col-md-4">
-          <div style="width:350px;height:200px;background-position:center;background-color:#CCCCCC;background-repeat:no-repeat;background-size:contain;background-image: url(http://via.placeholder.com/350x250)" id="imgPreview"></div>
+          <div style="width:350px;height:200px;background-position:center;background-color:#FFF;background-repeat:no-repeat;background-size:contain;background-image: url(http://via.placeholder.com/350x250)" id="imgPreview"></div>
           <div style="text-align: center; width:350px;">
             <a href="javascript:uploadImage()">Edit Image</a>
           </div>

@@ -45,28 +45,24 @@ function contextSearch(){
 }
 
 function runLoading(strLoading){
-	$("#login .loading").show();
-	$("#login .btnTxt").hide();
+	$(".login-loading").show();
 	$("#login").prop('disabled', true);
-	$("#login #fetch-name").html(strLoading);
+	$(".login-loading #fetch-name").html(strLoading);
 }
 
 function closeLoading(){
-	$("#login .loading").hide();
-	$("#login .btnTxt").show();
+	$(".login-loading").hide();
 	$("#login").prop('disabled', false);
 	loadGraphCMSCategories(); 
 }
 
 function runUploadCMS(){
-	$("#upload .loading").show();
-	$("#upload .btnTxt").hide();
+	$(".upload-loading").show();
 	$("#upload").prop('disabled', true);
 }
 
 function closeUploadCMS(){
-	$("#upload .loading").hide();
-	$("#upload .btnTxt").show();
+	$(".upload-loading").hide();
 	$("#upload").prop('disabled', false);
 }
 
