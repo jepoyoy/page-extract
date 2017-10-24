@@ -153,6 +153,39 @@ module.exports = function(app, express){
 		});
 	}
 
+	function checkURL(url) {
+	    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+	}
+
+	function getUrlParameter(url) {
+
+		console.log("CHECK" + checkURL(url));
+
+		if(checkURL(url)){
+			return url;
+		}
+
+		var queryparams = url.split('?')[1];
+
+		var params = queryparams.split('&');
+
+		var pair = null,
+		    data = [];
+
+		var extractedUrl = "#";
+
+		params.forEach(function(d) {
+		    pair = d.split('=');
+		    var value = pair[1];
+
+		    if(checkURL(value)){
+		    	extractedUrl = decodeURIComponent(value.replace(/\+/g, ' '));
+		    }
+
+		});
+	    return extractedUrl;
+	};
+
 	function runFBGraph(queryParams, params, req, res){
 
 		console.log('https://graph.facebook.com/' + queryParams.prefixObjId + queryParams.objId+'?fields='+queryParams.fields+'&access_token=' + req.query.token);
@@ -177,11 +210,11 @@ module.exports = function(app, express){
 		      var results = JSON.parse(data);
 		      var img = "";
 		      if(results.full_picture){
-		      	img = results.full_picture;
+		      	img = getUrlParameter(results.full_picture);
 		      }else if(results.webp_images){
 		      	img = results.webp_images[0].source;
 		      }else if(results.picture){
-		      	img = results.picture;
+		      	img = getUrlParameter(results.picture);
 		      }else{
 		      	img =''
 		      }

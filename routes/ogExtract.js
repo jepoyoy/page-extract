@@ -10,6 +10,39 @@ const POST_TYPE = "text";
 
 module.exports = function(app, express){
 
+	function checkURL(url) {
+	    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+	}
+
+	function getUrlParameter(url) {
+
+		console.log("CHECK" + checkURL(url));
+
+		if(checkURL(url)){
+			return url;
+		}
+
+		var queryparams = url.split('?')[1];
+
+		var params = queryparams.split('&');
+
+		var pair = null,
+		    data = [];
+
+		var extractedUrl = "#";
+
+		params.forEach(function(d) {
+		    pair = d.split('=');
+		    var value = pair[1];
+
+		    if(checkURL(value)){
+		    	extractedUrl = decodeURIComponent(value.replace(/\+/g, ' '));
+		    }
+
+		});
+	    return extractedUrl;
+	};
+
 	app.get('/extract/og', function (req, res) {
 		
 		scrape(req.query.url).then(function(allmeta){
@@ -26,7 +59,7 @@ module.exports = function(app, express){
 
 			  		title: meta.title,
 			  		caption: meta.description ? meta.description : meta.title,
-			  		image: meta.image ? meta.image.url : 'http://sanrafael.gov.ph/images/products-no-image.png'
+			  		image: meta.image ? getUrlParameter(meta.image.url) : 'http://sanrafael.gov.ph/images/products-no-image.png'
 
 			  	},
 
