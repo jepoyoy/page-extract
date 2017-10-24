@@ -5,15 +5,14 @@ function stackUpload(){
 			filestackStoreURL(
 				$("#imgPreview").css("background-image").replace("url(\"","").replace("\")",""),
 				function(){
-					closeUploadCMS();
-					submitForm();
+					return submitForm();
 				}
 			)
 		}else{
-			closeUploadCMS();
-			submitForm();
+			return submitForm();
 		}
 	}
+	//closeUploadCMS();
 }
 
 function filestackStoreURL(url, callback){
@@ -38,8 +37,6 @@ function uploadImage(){
 	    $("#filestackCDN").val(filstkRes.url)
 	};
 
-	var chorva = "chenes";
-	
 	 return client.pick({
 		    maxFiles: 1,
 		    transformations: {

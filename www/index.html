@@ -115,12 +115,14 @@
 
           <button id="upload" onclick="javascript:stackUpload(); return false;" class="btn btn-primary">
             <span class="btnTxt">Post Content</span>
-            <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;Uploading to Graph CMS...</span>
+            <span style="display:none" class="loading"><img src="loading.gif"/>&nbsp;Uploading...</span>
           </button>
 
           <button id="clear" onclick="javascript:clearForm(); return false;" class="btn btn-secondary" style="background-color:gray;color:white">
             <span class="btnTxt">Clear</span>
           </button>
+
+          <span style="color:green;display:none" id="upload-complete"><span class="glyphicon glyphicon-ok"></span>&nbsp; Upload complete!</span>
 
           <br/>
 

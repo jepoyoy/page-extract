@@ -109,8 +109,12 @@ function submitForm(){
 
 	$("#mainForm").ajaxSubmit({
 		success: function(data, textStatus, jqXHR, $form){
-			alert("Uploaded Successfully!");
+			closeUploadCMS();
 			clearForm();
+			$("#upload-complete").slideToggle();
+			setTimeout(function() { 
+				$("#upload-complete").slideToggle();
+			}, 3000);
 		}
 	})
 }
