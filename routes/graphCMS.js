@@ -142,7 +142,9 @@ module.exports = function(app, express){
 		  		urlthumbnailheight: $urlthumbnailheight,
 		  		urlthumbnailwidth: $urlthumbnailwidth,
 		  		urlmediaheight: $urlmediaheight,
-		  		urlmediawidth: $urlmediawidth) {
+		  		urlmediawidth: $urlmediawidth,
+		  		isPublished: true
+		  		) {
 			    id
 			  }
 			}`;
@@ -226,7 +228,8 @@ module.exports = function(app, express){
 		  		medialikes: $medialikes,
 		  		mediacomments: $mediacomments,
 		  		urlthumbnailheight: $urlthumbnailheight,
-		  		urlthumbnailwidth: $urlthumbnailwidth) {
+		  		urlthumbnailwidth: $urlthumbnailwidth,
+		  		isPublished: true) {
 			    id
 			  }
 			}`;
@@ -312,7 +315,8 @@ module.exports = function(app, express){
 	  		urlthumbnailheight: $urlthumbnailheight,
 	  		urlthumbnailwidth: $urlthumbnailwidth,
 	  		urlmediaheight: $urlmediaheight,
-	  		urlmediawidth: $urlmediawidth) {
+	  		urlmediawidth: $urlmediawidth,
+	  		isPublished: true) {
 		    id
 		  }
 		}`;
@@ -382,7 +386,8 @@ module.exports = function(app, express){
 	  		sourceicon: $sourceicon,
 	  		sourceprofile: $sourceprofile,
 	  		urlsource: $urlsource,
-	  		urlnew: $urlnew) {
+	  		urlnew: $urlnew,
+	  		isPublished: true) {
 		    id
 		  }
 		}`;
@@ -415,7 +420,8 @@ module.exports = function(app, express){
 	  		sourceicon: $sourceicon,
 	  		sourceprofile: $sourceprofile,
 	  		urlsource: $urlsource,
-	  		urlnew: $urlnew) {
+	  		urlnew: $urlnew,
+	  		isPublished: true) {
 		    id
 		  }
 		}`;

@@ -120,7 +120,8 @@ function submitForm(){
 function clearForm(){
 
 	$("#inpUrl").val("");
-	$("#mainForm").find("input[type=text], textarea").val("");
+	$("#mainForm #inpTitle").val("");
+	$("#mainForm #inpCaption").val("");
 	$("#other-data").html("");
 	$("#imgPreview").css("background-image", "url(http://via.placeholder.com/350x250)");  
 }
