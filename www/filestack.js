@@ -26,6 +26,13 @@ function filestackStoreURL(url, callback){
 }
 
 function uploadImage(){
+
+	var autoupload = true;
+	if(!checkURLIfStatic($("#filestackCDN").val())){
+		alert("Detected: URL is not a static image file. Filestack URL upload will not work for link. Download the image and manually upload it from file system.")
+		autoupload = false;
+	}
+
 	const client = filestack.init('AilcyvnHqTsyng8JmGEAYz');
 
 	const results = document.getElementById('other-data');
@@ -48,6 +55,8 @@ function uploadImage(){
 		    fromSources: ['url', 'local_file_system'],
 		    onOpen: function(){
 
+		    	if(!autoupload){ return; }
+
 		    	setTimeout(function() { 
 		    			var textInput = $("#imgPreviewSrc").val();
 		    	 		var $input = $('.fsp-url-source__input').val(textInput);
@@ -65,3 +74,39 @@ function uploadImage(){
 		    .then(setResults);
      
 }
+
+
+function checkURL(url) {
+    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
+
+function checkURLIfStatic(url) {
+
+		console.log("CHECK" + checkURL(url));
+
+		if(checkURL(url)){
+			return true;
+		}else{
+			if(checkURL(url.split('?')[0])){
+				return true;
+			}
+		}
+
+		var queryparams = url.split('?')[1];
+
+		var params = queryparams.split('&');
+
+		var pair = null,
+		    data = [];
+
+		params.forEach(function(d) {
+		    pair = d.split('=');
+		    var value = pair[1];
+
+		    if(checkURL(value)){
+		    	return true;
+		    }
+
+		});
+	    return false;
+	};

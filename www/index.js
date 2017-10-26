@@ -126,12 +126,44 @@ function clearForm(){
 	$("#imgPreview").css("background-image", "url(http://via.placeholder.com/350x250)");  
 }
 
+function showImageNewTab(){
+	window.open($("#filestackCDN").val(),'_blank');
+}
 
+function checkURL(url) {
+    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
 
+function checkURLIfStatic(url) {
 
+		console.log("CHECK" + checkURL(url));
 
+		if(checkURL(url)){
+			return true;
+		}else{
+			if(checkURL(url.split('?')[0])){
+				return true;
+			}
+		}
 
+		var queryparams = url.split('?')[1];
 
+		var params = queryparams.split('&');
+
+		var pair = null,
+		    data = [];
+
+		params.forEach(function(d) {
+		    pair = d.split('=');
+		    var value = pair[1];
+
+		    if(checkURL(value)){
+		    	return true;
+		    }
+
+		});
+	    return false;
+	};
 
 
 
