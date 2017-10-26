@@ -11,6 +11,7 @@ function ogSearch(){
               $("#imgPreview").css("background-image", "url(" + data.main.image + ")"); 
               $("#imgPreviewSrc").val(data.main.image); 
               $("#filestackCDN").val(data.main.image);  
+              $("#extractedLang").val(data.summary.lang);  
               $("#mappingsJson").val(JSON.stringify(data.summary));
 
               var options = {

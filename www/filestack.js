@@ -1,16 +1,7 @@
 function stackUpload(){
 	if(validateForm()){
 		runUploadCMS();
-		if($("#filestackCDN").val().length <= 0){
-			filestackStoreURL(
-				$("#imgPreview").css("background-image").replace("url(\"","").replace("\")",""),
-				function(){
-					return submitForm();
-				}
-			)
-		}else{
-			return submitForm();
-		}
+		submitForm();
 	}
 	//closeUploadCMS();
 }

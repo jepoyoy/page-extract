@@ -20,7 +20,16 @@ $(document).ready(function(){
           	result[item].name, '</option>');
 	    });
 	    $("#inpLang").html(languages.join(''));
+	    
+		if(localStorage.getItem('langdefault')){
+			$('#inpLang option[value='+localStorage.getItem('langdefault')+']').prop('selected', true);
+		}
 	});
+
+	$("#inpLang").change(function(){
+		localStorage.setItem('langdefault', $("#inpLang").val());
+	})
+
 });
 
 function contextSearch(){
@@ -53,6 +62,9 @@ function runLoading(strLoading){
 function closeLoading(){
 	$(".login-loading").hide();
 	$("#login").prop('disabled', false);
+
+	$('#inpLang option[value='+$("#extractedLang").val().split("-")[0].toLowerCase()+']').prop('selected', true);
+	$("#inpLang").trigger("change");
 	loadGraphCMSCategories(); 
 }
 
@@ -129,41 +141,6 @@ function clearForm(){
 function showImageNewTab(){
 	window.open($("#filestackCDN").val(),'_blank');
 }
-
-function checkURL(url) {
-    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
-}
-
-function checkURLIfStatic(url) {
-
-		console.log("CHECK" + checkURL(url));
-
-		if(checkURL(url)){
-			return true;
-		}else{
-			if(checkURL(url.split('?')[0])){
-				return true;
-			}
-		}
-
-		var queryparams = url.split('?')[1];
-
-		var params = queryparams.split('&');
-
-		var pair = null,
-		    data = [];
-
-		params.forEach(function(d) {
-		    pair = d.split('=');
-		    var value = pair[1];
-
-		    if(checkURL(value)){
-		    	return true;
-		    }
-
-		});
-	    return false;
-	};
 
 
 
