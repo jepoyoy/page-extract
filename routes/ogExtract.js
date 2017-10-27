@@ -2,6 +2,9 @@ const express = require('express')
 const app = express();
 const querystring = require('querystring');
 const scrape = require('metadata-parser');
+const parseOpenGraph = require('metadata-parser').parseOpenGraph;
+
+var cheerio = require('cheerio');
 const preq = require('preq');
 const favicon = require('favicon');
 
@@ -49,7 +52,11 @@ module.exports = function(app, express){
 
 	app.get('/extract/og', function (req, res) {
 		
-		scrape(req.query.url).then(function(allmeta){
+		preq(req.query.url).then(function(response){
+			console.log(response.body);
+			var rawHTML = response.body.replace(/property/g, "name");
+			$ = cheerio.load(response.body);
+		    return parseOpenGraph($).then(function(allmeta){
 
 			scrapeFavicon(req.query.url, allmeta, function(favicon_url, allmeta){
 
@@ -67,7 +74,7 @@ module.exports = function(app, express){
 	      	var sourcename;
 	      	var sourcename2;
 	      	var urlsource;
-
+	      	var lang;
 
 
 	      	if(meta){
@@ -75,7 +82,7 @@ module.exports = function(app, express){
 	      		caption = meta.description ? meta.description : meta.title ? meta.title : '';
 	      		sourcename = meta.site_name ? meta.site_name : '';
 	      		sourcename2 = meta.url ? meta.url.split("/")[2] : '';
-	      		lang = general.lang ? general.lang : '';
+	      		lang = general ? general.lang : '';
 	      		image = Array.isArray(meta.image) ? getUrlParameter(meta.image[0].url) : meta.image.url ? getUrlParameter(meta.image.url) : 'http://sanrafael.gov.ph/images/products-no-image.png';
 	      		
 	      	}
@@ -119,6 +126,8 @@ module.exports = function(app, express){
 
 			res.send(output);
 			});  
+
+		});
 		
 		});
 	})
