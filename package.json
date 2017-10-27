@@ -29,6 +29,7 @@
     "filestack-js": "^0.9.9",
     "follow-redirects": "^1.2.5",
     "graphql-tag": "^2.5.0",
+    "html-extractor": "^0.2.2",
     "html-metadata": "^1.6.3",
     "http": "0.0.0",
     "meta-scrape": "0.0.4",

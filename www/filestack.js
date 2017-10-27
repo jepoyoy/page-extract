@@ -19,7 +19,7 @@ function filestackStoreURL(url, callback){
 function uploadImage(){
 
 	var autoupload = true;
-	if(!checkURLIfStatic($("#filestackCDN").val())){
+	if(!checkURLIfStatic($("#extractedImage").val())){
 		alert("Detected: URL is not a static image file. Filestack URL upload will not work for link. Download the image and manually upload it from file system.")
 		autoupload = false;
 	}

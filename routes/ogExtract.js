@@ -4,6 +4,8 @@ const querystring = require('querystring');
 const scrape = require('metadata-parser');
 const parseOpenGraph = require('metadata-parser').parseOpenGraph;
 
+var Extrator = require("html-extractor");
+
 var cheerio = require('cheerio');
 const preq = require('preq');
 const favicon = require('favicon');
@@ -26,7 +28,7 @@ module.exports = function(app, express){
 		}
 
 		if(checkURL(url.split('?')[0])){
-			return url;
+			return url.split('?')[0];
 		}
 
 		var queryparams = url.split('?')[1];
@@ -53,18 +55,19 @@ module.exports = function(app, express){
 	app.get('/extract/og', function (req, res) {
 		
 		preq(req.query.url).then(function(response){
-			console.log(response.body);
+			//console.log(response.body);
 			var rawHTML = response.body.replace(/property/g, "name");
-			$ = cheerio.load(response.body);
-		    return parseOpenGraph($).then(function(allmeta){
+			
+			var myExtrator = new Extrator();
+
+		    
+		    myExtrator.extract( rawHTML, function( err, allmeta ){
+
+		    	console.log(allmeta);
 
 			scrapeFavicon(req.query.url, allmeta, function(favicon_url, allmeta){
-
-			console.log(allmeta)
 	      	
-	      	meta = allmeta.openGraph;
-	      	twitter = allmeta.twitter;
-	      	general = allmeta.general;
+	      	meta = allmeta.meta;
 
 	      	var output = {};
 
@@ -74,18 +77,34 @@ module.exports = function(app, express){
 	      	var sourcename;
 	      	var sourcename2;
 	      	var urlsource;
-	      	var lang;
+	      	var lang = 'sv';//default
+	      	var imgObj;
+	      	var timepublished;
 
+	      	console.log(meta.title)
 
 	      	if(meta){
-	      		title = meta.title ? meta.title : general.title ? general.title : '';
-	      		caption = meta.description ? meta.description : meta.title ? meta.title : '';
-	      		sourcename = meta.site_name ? meta.site_name : '';
-	      		sourcename2 = meta.url ? meta.url.split("/")[2] : '';
-	      		lang = general ? general.lang : '';
-	      		image = Array.isArray(meta.image) ? getUrlParameter(meta.image[0].url) : meta.image.url ? getUrlParameter(meta.image.url) : 'http://sanrafael.gov.ph/images/products-no-image.png';
-	      		
-	      	}
+	      		title = getFirstNonNull([meta.title, meta['og:title'], meta['twitter:title']]);
+	      		caption = meta['og:description'] ? meta['og:description'] : meta['twitter:description']  ? meta['twitter:description'] : '';
+	      		sourcename = getFirstNonNull([meta['og:site_name']]);
+	      		sourcename2 = meta['og:url'] ? meta['og:url'].split("/")[2] : '';
+	      		image = meta['og:image'] ? getUrlParameter(meta['og:image']) : '';
+	      		imgObj = meta['og:image'];
+
+	      		if(meta['og:locale']){
+	      			if(meta['og:locale'].indexOf("_") != -1 ){
+	      				lang = meta['og:locale'].split("_")[0];
+	      			}else{
+	      				lang= meta['og:locale'];
+	      			}
+	      		}
+
+	      		timepublished = getFirstNonNull([meta['article:published_time'], meta['lp.article:published_time']]);
+
+	      		if(timepublished.length > 0){
+	      			timepublished = new Date(timepublished).toISOString()
+	      		}
+	      	}	
 
 	      	output = {
 
@@ -100,7 +119,7 @@ module.exports = function(app, express){
 				  	summary: {
 				  		type: POST_TYPE,
 				  		provider: EXTRACT_SOURCE,
-				  		timepublished: !allmeta ? '' : allmeta.jsonLd ? new Date(allmeta.jsonLd.datePublished) : 'n/a',
+				  		timepublished: timepublished,
 				  		sourcename: sourcename,
 				  		sourcename2: sourcename2,
 				  		sourceicon: favicon_url,
@@ -111,16 +130,16 @@ module.exports = function(app, express){
 				  };
 
 				if(meta){  
-					if(meta.image.url){
-						output.summary.urlmedia = meta.image.url;
-						output.summary.urlthubmnail = meta.image.url;
+					if(meta['og:image']){
+						output.summary.urlmedia = imgObj;
+						output.summary.urlthubmnail = imgObj;
 					}
 
-					if(meta.image){
-						output.summary.urlthubmnailheight = meta.image.height;
-						output.summary.urlthubmnailwidth = meta.image.width;
-						output.summary.urlmediaheight = meta.image.height;
-						output.summary.urlmediawidth = meta.image.width;
+					if(meta['og:image']){
+						output.summary.urlthubmnailheight = meta['og:image:height'];
+						output.summary.urlthubmnailwidth = meta['og:image:width'];;
+						output.summary.urlmediaheight = meta['og:image:height'];;
+						output.summary.urlmediawidth = meta['og:image:width'];;
 					}
 				}
 
@@ -131,6 +150,31 @@ module.exports = function(app, express){
 		
 		});
 	})
+
+	function getFirstNonNull(arrayOfValues){
+
+		if(arrayOfValues.length <= 0){
+			return '';
+		}
+
+		try{
+
+			var variable = arrayOfValues.pop();
+			console.log("CHECK THIS" + typeof variable);
+			console.log(typeof variable != 'undefined')
+			if(typeof variable != 'undefined'){
+				console.log("NOT UNDEFINED: 	" + variable);
+				return variable;
+			}
+
+			return getFirstNonNull(arrayOfValues);
+
+		}catch(err){
+			return getFirstNonNull(arrayOfValues);
+		}
+
+		return '';
+	}
 
 	function scrapeFavicon(url, allmeta, callback){
 		console.log(url);

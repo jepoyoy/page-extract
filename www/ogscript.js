@@ -10,8 +10,9 @@ function ogSearch(){
               $("#inpCaption").val(data.main.caption);
               $("#imgPreview").css("background-image", "url(" + data.main.image + ")"); 
               $("#imgPreviewSrc").val(data.main.image); 
-              $("#filestackCDN").val(data.main.image);  
-              $("#extractedLang").val(data.summary.lang);  
+              //$("#filestackCDN").val(data.main.image);  
+              $("#extractedLang").val(data.summary.lang); 
+              $("#extractedImage").val(data.main.image);  
               $("#mappingsJson").val(JSON.stringify(data.summary));
 
               var options = {
