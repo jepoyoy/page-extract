@@ -77,27 +77,6 @@ function checkURLIfStatic(url) {
 
 		if(checkURL(url)){
 			return true;
-		}else{
-			if(checkURL(url.split('?')[0])){
-				return true;
-			}
 		}
-
-		var queryparams = url.split('?')[1];
-
-		var params = queryparams.split('&');
-
-		var pair = null,
-		    data = [];
-
-		params.forEach(function(d) {
-		    pair = d.split('=');
-		    var value = pair[1];
-
-		    if(checkURL(value)){
-		    	return true;
-		    }
-
-		});
 	    return false;
 	};

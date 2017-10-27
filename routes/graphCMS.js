@@ -356,6 +356,11 @@ module.exports = function(app, express){
 
 	function getWebpageMapVars(req, mappings){
 
+		console.log("------");
+		console.log(mappings)
+
+//	$timescheduled: DateTime!,
+//timepublished: $timepublished,
 	  	var wpMutation = gql`mutation (
 			$title: String!,
 			$caption: String!,
@@ -370,7 +375,13 @@ module.exports = function(app, express){
 	  		$sourceicon: String!,
 	  		$sourceprofile: String!,
 	  		$urlsource: String!,
-	  		$urlnew: String!
+	  		$urlmedia: String!,
+	  		$urlthumbnail: String!,
+	  		$urlthumbnailheight: Int!,
+	  		$urlthumbnailwidth: Int!,
+	  		$urlmediaheight: Int!,
+	  		$urlmediawidth: Int!,
+	  		$urlnew: String!,
 		  ){
 		  createPost(
 		  	title: $title,
@@ -386,6 +397,12 @@ module.exports = function(app, express){
 	  		sourceicon: $sourceicon,
 	  		sourceprofile: $sourceprofile,
 	  		urlsource: $urlsource,
+	  		urlmedia: $urlmedia,
+	  		urlthumbnail: $urlthumbnail,
+	  		urlthumbnailheight: $urlthumbnailheight,
+	  		urlthumbnailwidth: $urlthumbnailwidth,
+	  		urlmediaheight: $urlmediaheight,
+	  		urlmediawidth: $urlmediawidth,
 	  		urlnew: $urlnew,
 	  		isPublished: true) {
 		    id
@@ -405,6 +422,12 @@ module.exports = function(app, express){
 	  		$sourceicon: String!,
 	  		$sourceprofile: String!,
 	  		$urlsource: String!,
+	  		$urlmedia: String!,
+	  		$urlthumbnail: String!,
+	  		$urlthumbnailheight: Int!,
+	  		$urlthumbnailwidth: Int!,
+	  		$urlmediaheight: Int!,
+	  		$urlmediawidth: Int!,
 	  		$urlnew: String!,
 		  ){
 		  createPost(
@@ -420,6 +443,12 @@ module.exports = function(app, express){
 	  		sourceicon: $sourceicon,
 	  		sourceprofile: $sourceprofile,
 	  		urlsource: $urlsource,
+	  		urlmedia: $urlmedia,
+	  		urlthumbnail: $urlthumbnail,
+	  		urlthumbnailheight: $urlthumbnailheight,
+	  		urlthumbnailwidth: $urlthumbnailwidth,
+	  		urlmediaheight: $urlmediaheight,
+	  		urlmediawidth: $urlmediawidth,
 	  		urlnew: $urlnew,
 	  		isPublished: true) {
 		    id
@@ -432,13 +461,19 @@ module.exports = function(app, express){
 			language:req.body.inpLang,
 			categoriesId:req.body.inpCategory,
 			timescheduled: new Date(req.body.inpTime).toISOString(),
-			type: mappings.type,
-	  		provider: mappings.provider,
-	  		sourcename: mappings.sourcename, 
-	  		sourcename2: mappings.sourcename2, 
-	  		sourceicon: mappings.sourceicon, 
+			type: mappings.type || '',
+	  		provider: mappings.provider || '',
+	  		sourcename: mappings.sourcename || '', 
+	  		sourcename2: mappings.sourcename2 || '', 
+	  		sourceicon: mappings.sourceicon || '', 
 	  		sourceprofile: mappings.sourceprofile ? mappings.sourceprofile : '',
-	  		urlsource: mappings.urlsource,
+	  		urlsource: mappings.urlsource || '',
+	  		urlmedia: mappings.urlmedia || '#',
+	  		urlthumbnail: mappings.urlthumbnail || '#',
+	  		urlthumbnailheight: parseInt(mappings.urlthumbnailheight) || 0,
+	  		urlthumbnailwidth: parseInt(mappings.urlthumbnailwidth) || 0,
+	  		urlmediaheight: parseInt(mappings.urlmediaheight) || 0,
+	  		urlmediawidth: parseInt(mappings.urlmediawidth) || 0,
 	  		urlnew: req.body.filestackCDN
 		}
 

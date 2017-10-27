@@ -27,34 +27,14 @@ module.exports = function(app, express){
 			return url;
 		}
 
-		if(checkURL(url.split('?')[0])){
-			return url.split('?')[0];
-		}
-
-		var queryparams = url.split('?')[1];
-
-		var params = queryparams.split('&');
-
-		var pair = null,
-		    data = [];
-
-		var extractedUrl = url + "&nofstkTag=true";
-
-		params.forEach(function(d) {
-		    pair = d.split('=');
-		    var value = pair[1];
-
-		    if(checkURL(value)){
-		    	extractedUrl = decodeURIComponent(value.replace(/\+/g, ' '));
-		    }
-
-		});
-	    return extractedUrl;
+		return url;
 	};
 
 	app.get('/extract/og', function (req, res) {
 		
+		console.log("start with")
 		preq(req.query.url).then(function(response){
+			console.log("done with")
 			//console.log(response.body);
 			var rawHTML = response.body.replace(/property/g, "name");
 			
@@ -67,6 +47,7 @@ module.exports = function(app, express){
 
 			scrapeFavicon(req.query.url, allmeta, function(favicon_url, allmeta){
 	      	
+
 	      	meta = allmeta.meta;
 
 	      	var output = {};
@@ -103,6 +84,8 @@ module.exports = function(app, express){
 
 	      		if(timepublished.length > 0){
 	      			timepublished = new Date(timepublished).toISOString()
+	      		}else{
+	      			timepublished = new Date('01/01/1900 12:00 AM').toISOString()
 	      		}
 	      	}	
 
@@ -132,14 +115,22 @@ module.exports = function(app, express){
 				if(meta){  
 					if(meta['og:image']){
 						output.summary.urlmedia = imgObj;
-						output.summary.urlthubmnail = imgObj;
+						output.summary.urlthumbnail = imgObj;
+					}else{
+						output.summary.urlmedia = '';
+						output.summary.urlthumbnail = '';
 					}
 
 					if(meta['og:image']){
-						output.summary.urlthubmnailheight = meta['og:image:height'];
-						output.summary.urlthubmnailwidth = meta['og:image:width'];;
-						output.summary.urlmediaheight = meta['og:image:height'];;
+						output.summary.urlthumbnailheight = meta['og:image:height'];
+						output.summary.urlthumbnailwidth = meta['og:image:width'];
+						output.summary.urlmediaheight = meta['og:image:height'];
 						output.summary.urlmediawidth = meta['og:image:width'];;
+					}else{
+						output.summary.urlthumbnailheight = '';
+						output.summary.urlthumbnailwidth = '';
+						output.summary.urlmediaheight = '';
+						output.summary.urlmediawidth = '';
 					}
 				}
 
