@@ -63,7 +63,9 @@ function closeLoading(){
 	$(".login-loading").hide();
 	$("#login").prop('disabled', false);
 
-	$('#inpLang option[value='+$("#extractedLang").val().split("-")[0].toLowerCase()+']').prop('selected', true);
+	if($("#extractedLang").val().length > 0){
+		$('#inpLang option[value='+$("#extractedLang").val().split("-")[0].toLowerCase()+']').prop('selected', true);
+	}
 	$("#inpLang").trigger("change");
 	loadGraphCMSCategories(); 
 }
