@@ -34,7 +34,7 @@ function ogSearch(){
       if (XMLHttpRequest.status == 0) {
         alert(' Check Your Network.');
       } else if (XMLHttpRequest.status == 404) {
-        alert('Requested URL not found.');
+        alert('Requested URL not found or invalid URL.');
       } else if (XMLHttpRequest.status == 500) {
         alert('Internel Server Error.');
       }  else {

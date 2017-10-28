@@ -33,11 +33,23 @@ module.exports = function(app, express){
 	app.get('/extract/og', function (req, res) {
 		
 		console.log("start with")
-		preq(req.query.url).then(function(response){
+		preq.get({
+		    uri: req.query.url,
+		    headers: {
+		        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+		        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'
+		    }
+		}).then(function(response){
 			console.log("done with")
 			//console.log(response.body);
-			var rawHTML = response.body.replace(/property/g, "name");
-			
+			var rawHTML
+
+			try{
+				rawHTML = response.body.replace(/property/g, "name");
+			}catch(err){
+				return res.status(404).send('Not found');
+			}
+
 			var myExtrator = new Extrator();
 
 		    
@@ -67,7 +79,7 @@ module.exports = function(app, express){
 	      	if(meta){
 	      		title = getFirstNonNull([meta.title, meta['og:title'], meta['twitter:title']]);
 	      		caption = meta['og:description'] ? meta['og:description'] : meta['twitter:description']  ? meta['twitter:description'] : '';
-	      		sourcename = getFirstNonNull([meta['og:site_name']]);
+	      		sourcename = getFirstNonNull([meta['og:site_name'], title]);
 	      		sourcename2 = meta['og:url'] ? meta['og:url'].split("/")[2] : '';
 	      		image = meta['og:image'] ? getUrlParameter(meta['og:image']) : '';
 	      		imgObj = meta['og:image'];
