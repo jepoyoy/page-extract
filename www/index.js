@@ -36,7 +36,8 @@ function contextSearch(){
 
 	var url = $("#inpUrl").val();
 
-	if(url.length <= 0){ alert("url is required"); return;}
+	if(url.length <= 0 || !isUrlValid(url)){ alert("valid url is required"); return;}
+
 
 	if(url.indexOf("facebook.com/") !== -1){
 		fbSearch();
@@ -51,6 +52,14 @@ function contextSearch(){
 		ogSearch();
 		return;
 	}
+}
+
+function isUrlValid(userInput) {
+    var res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    if(res == null)
+        return false;
+    else
+        return true;
 }
 
 function runLoading(strLoading){
