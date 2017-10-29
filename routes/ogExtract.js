@@ -79,7 +79,7 @@ module.exports = function(app, express){
 	      	if(meta){
 	      		title = getFirstNonNull([meta.title, meta['og:title'], meta['twitter:title']]);
 	      		caption = meta['og:description'] ? meta['og:description'] : meta['twitter:description']  ? meta['twitter:description'] : '';
-	      		sourcename = getFirstNonNull([meta['og:site_name'], title]);
+	      		sourcename = meta['og:site_name'] || title || '';
 	      		sourcename2 = meta['og:url'] ? meta['og:url'].split("/")[2] : '';
 	      		image = meta['og:image'] ? getUrlParameter(meta['og:image']) : '';
 	      		imgObj = meta['og:image'];
