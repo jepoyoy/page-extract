@@ -36,7 +36,9 @@ function contextSearch(){
 
 	var url = $("#inpUrl").val();
 
-	if(url.length <= 0 || !isUrlValid(url)){ alert("valid url is required"); return;}
+	if(url.length <= 0 || !isUrlValid(url)){ showError("valid url is required"); return;}
+
+	if(!/^(f|ht)tps?:\/\//i.test(url)){ showError("make sure URL has 'http://' as prefix"); return; }
 
 
 	if(url.indexOf("facebook.com/") !== -1){
@@ -87,6 +89,15 @@ function runUploadCMS(){
 function closeUploadCMS(){
 	$(".upload-loading").hide();
 	$("#upload").prop('disabled', false);
+}
+
+function showError(error){
+	$("#error-loading").show();
+	$("#error-loading").html(error);
+	setTimeout(function() { 
+		$("#error-loading").hide();
+		$("#error-loading").html("");
+	}, 3000);
 }
 
 function loadGraphCMSCategories(){

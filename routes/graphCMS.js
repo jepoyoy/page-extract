@@ -47,6 +47,7 @@ module.exports = function(app, express){
 	  	console.log(req.body.inpCaption);
 	  	console.log(req.body.inpCategory);
 	  	console.log(req.body.inpLang);
+	  	console.log(req.body.inpSourcename);
 	  	console.log(new Date(req.body.inpTime).toISOString());
 	  	
 	  	var mappings = JSON.parse(req.body.mappingsJson);
@@ -158,7 +159,7 @@ module.exports = function(app, express){
 				timepublished: new Date(mappings.timepublished),
 				type: mappings.type,
 		  		provider: mappings.provider,
-		  		sourcename: mappings.sourcename, //channel name
+		  		sourcename: req.body.inpSourcename.length > 1 ? req.body.inpSourcename : mappings.sourcename , //channel name
 		  		sourceinfo: mappings.sourceinfo.toString(), //channel subs count
 		  		sourceinfo2: mappings.sourceinfo2, //channel subs count
 		  		sourceicon: mappings.sourceicon, //channel image
@@ -243,7 +244,7 @@ module.exports = function(app, express){
 				timepublished: new Date(mappings.timepublished),
 				type: mappings.type,
 		  		provider: mappings.provider,
-		  		sourcename: mappings.sourcename, 
+		  		sourcename: req.body.inpSourcename.length > 1 ? req.body.inpSourcename : mappings.sourcename, 
 		  		sourceinfo: mappings.sourceinfo.toString(), 
 		  		sourceicon: mappings.sourceicon,
 		  		sourceprofile: mappings.sourceprofile,
@@ -330,7 +331,7 @@ module.exports = function(app, express){
 			timepublished: new Date(mappings.timepublished),
 			type: mappings.type,
 	  		provider: mappings.provider,
-	  		sourcename: mappings.sourcename, 
+	  		sourcename: req.body.inpSourcename.length > 1 ? req.body.inpSourcename : mappings.sourcename, 
 	  		sourcename2: mappings.sourcename2, 
 	  		sourceinfo: mappings.sourceinfo.toString(), 
 	  		sourceicon: mappings.sourceicon,
@@ -463,7 +464,7 @@ module.exports = function(app, express){
 			timescheduled: new Date(req.body.inpTime).toISOString(),
 			type: mappings.type || '',
 	  		provider: mappings.provider || '',
-	  		sourcename: mappings.sourcename || '', 
+	  		sourcename: req.body.inpSourcename.length > 1 ? req.body.inpSourcename : mappings.sourcename ? mappings.sourcename : '', 
 	  		sourcename2: mappings.sourcename2 || '', 
 	  		sourceicon: mappings.sourceicon || '', 
 	  		sourceprofile: mappings.sourceprofile ? mappings.sourceprofile : '',

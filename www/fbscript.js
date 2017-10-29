@@ -50,6 +50,7 @@ window.fbAsyncInit = function() {
               $("#inpCaption").val(data.main.caption);
               $("#imgPreview").css("background-image", "url(" + data.main.image + ")");  
               $("#imgPreviewSrc").val(data.main.image);  
+              $("#inpSourcename").val(data.summary.sourcename || '');
               $("#extractedLang").val(data.summary.lang); 
               $("#extractedImage").val(data.main.image);  
               

@@ -9,7 +9,8 @@ function ogSearch(){
         $("#inpTitle").val(data.main.title);
               $("#inpCaption").val(data.main.caption);
               $("#imgPreview").css("background-image", "url(" + data.main.image + ")"); 
-              $("#imgPreviewSrc").val(data.main.image); 
+              $("#imgPreviewSrc").val(data.main.image);
+              $("#inpSourcename").val(data.summary.sourcename || '');
               //$("#filestackCDN").val(data.main.image);  
               $("#extractedLang").val(data.summary.lang); 
               $("#extractedImage").val(data.main.image);  
@@ -32,13 +33,14 @@ function ogSearch(){
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) { 
       if (XMLHttpRequest.status == 0) {
-        alert(' Check Your Network.');
+        showError(' Check Your Network.');
       } else if (XMLHttpRequest.status == 404) {
-        alert('Requested URL not found or invalid URL.');
+        showError('Requested URL not found or invalid URL.');
       } else if (XMLHttpRequest.status == 500) {
-        alert('Internel Server Error.');
+        showError('Internel Server Error.');
       }  else {
-         alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+         showError('Unknown Error. Full error trace in console logs');
+         console.log(XMLHttpRequest.responseText);
       }     
        closeLoading();  
     }

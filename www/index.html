@@ -58,6 +58,8 @@
           </button>
           
           <span style="display:none" class="login-loading"><img src="ellip.gif"/>&nbsp;<span id="fetch-name"></span>&nbsp;fetch in process...</span>
+
+          <span  class="alert alert-danger" style="display:none" id="error-loading"></span>
           
         </form>
       </div>
@@ -82,6 +84,12 @@
               <label for="inpCaption" class="col-sm-2 col-form-label">Caption</label>
               <div class="col-sm-10">
                 <textarea class="form-control" id="inpCaption" name="inpCaption" placeholder="caption"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inpSourcename" class="col-sm-2 col-form-label">Source Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inpSourcename" name="inpSourcename" placeholder="sourcename">
               </div>
             </div>
             <div class="form-group row">
