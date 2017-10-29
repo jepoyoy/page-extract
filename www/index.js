@@ -156,6 +156,7 @@ function clearForm(){
 	$("#inpUrl").val("");
 	$("#mainForm #inpTitle").val("");
 	$("#mainForm #inpCaption").val("");
+	$("#mainForm #inpSourcename").val("");
 	$("#other-data").html("");
 	$("#imgPreview").css("background-image", "url(http://via.placeholder.com/350x250)");  
 }
